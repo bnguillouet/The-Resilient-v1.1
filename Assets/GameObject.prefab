@@ -1,0 +1,170 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3241732750049783532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6777968798634027066}
+  - component: {fileID: 5107822716570859340}
+  m_Layer: 0
+  m_Name: Watertile0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6777968798634027066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241732750049783532}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8797455, y: 3.9265296, z: 0.49258193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4056399270271128899}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &5107822716570859340
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3241732750049783532}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9712b3ffe26c5b94e82475145c021be4, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4293802086605098598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4226910749119142386}
+  - component: {fileID: 7831527493249405326}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4226910749119142386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4293802086605098598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.44496274, y: 1.2473886, z: -0.42834425}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4056399270271128899}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7831527493249405326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4293802086605098598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22fd10cc3d5e944495d6a1352ba17de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoilTile: {fileID: 2100000, guid: 383e758bbcf114149867571f01a87c21, type: 2}
+  WaterTile0: {fileID: 2100000, guid: 8350557a6a57a9f42a1ee0a9e9cb9712, type: 2}
+  WaterTile1: {fileID: 2100000, guid: b2bf512355ebfe244bef5c07b34cf689, type: 2}
+  WaterTile1_90: {fileID: 2100000, guid: fa3c6bfebbd15c24fb8757c192a87126, type: 2}
+  WaterTile1_180: {fileID: 2100000, guid: 8b1cf31b5c3327246aea383688f432e1, type: 2}
+  WaterTile1_270: {fileID: 2100000, guid: fb79a219fa61f754fb4f67b8e6f72bbd, type: 2}
+  WaterTile2: {fileID: 2100000, guid: 620f510b19d94f1458eff50265939a61, type: 2}
+  WaterTile2_90: {fileID: 2100000, guid: d294e3dad3992d548816923677453a80, type: 2}
+  WaterTile2_180: {fileID: 2100000, guid: bf96814bd36cf814780c954e4fa3ee30, type: 2}
+  WaterTile2_270: {fileID: 2100000, guid: a5c4fe7e850379d4aaf26c526ae252c0, type: 2}
+  WaterTile3: {fileID: 2100000, guid: f96489c550f5fde428ddd309118c4d09, type: 2}
+  WaterTile3_90: {fileID: 2100000, guid: 0878f80961ea1ab41b1972db53b1a158, type: 2}
+  WaterTile4: {fileID: 2100000, guid: cd6827c9edc37804998bc35fb9e82c81, type: 2}
+  WaterTile4_90: {fileID: 2100000, guid: 2572e5fd936340d4b9856e2442d25f19, type: 2}
+  WaterTile4_180: {fileID: 2100000, guid: 56ee2bee391ac5541925ff5141c55af1, type: 2}
+  WaterTile4_270: {fileID: 2100000, guid: 16a91359ff65f9043a6d0ef798c5bef8, type: 2}
+  WaterTile5: {fileID: 2100000, guid: 0e388adacd98dba408bb5f1eec42061f, type: 2}
+--- !u!1 &8722010583774773744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4056399270271128899}
+  m_Layer: 0
+  m_Name: Tilestexture
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4056399270271128899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8722010583774773744}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6777968798634027066}
+  m_Father: {fileID: 4226910749119142386}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
