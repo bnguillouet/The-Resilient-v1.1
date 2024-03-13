@@ -6,9 +6,7 @@ public enum TileType { Water, Soil, Building }
 public class Tile// : MonoBehaviour
 {
     public TileType type;
-    public Vector2Int position; // 
-    public int x;
-    public int y;
+    public Vector2Int position;
     public bool hoverVisual { get; set; }
     private bool hasClicked = false;
 
@@ -105,7 +103,8 @@ public class Tile// : MonoBehaviour
     /**********************************************/
     public virtual void UpdateVegetationObject(string vegetationPath)
     {
-        vegetationFront.ReLoadImage(vegetationPath , "", 100, hoverVisual);  // Changer la position ExtInput pour le batiment ds lequel est placé la structure      
+        //vegetationFront.ReLoadImage(vegetationPath , "", 100, hoverVisual);  // Changer la position ExtInput pour le batiment ds lequel est placé la structure   
+        vegetationFront.ReLoadImage(vegetationPath , "", 100, (hoverVisual || position.x >= GameSettings.Instance.ownedgridSizeX || position.y >= GameSettings.Instance.ownedgridSizeY)   ); 
     }
 
     public void UpdateTileView()
@@ -118,7 +117,7 @@ public class Tile// : MonoBehaviour
 
         if (type == TileType.Water)
         {    
-            //tilePath = TileGrid.Instance.GetWaterTile(x, y); //TO DO REMETTRE QUAND TILEGRID 
+            tilePath = TileGrid.Instance.GetWaterTile(position);
             if (vegetationLevel > 0){vegetationPath = "Plants/Vegetation/Aquatic"+vegetationLevel;}
         }
         else //if (type == TileType.Soil || type == TileType.Building)
@@ -157,7 +156,7 @@ public class Tile// : MonoBehaviour
         Color tileColor = new Color(1f, 1f, 1f, 1f); 
         Color coverColor = new Color(1f, 1f, 1f, transparencyCover); 
         Color vegetationColor = new Color(1f, 1f, 1f, 1f); 
-        if (hoverVisual || x >= GameSettings.Instance.ownedgridSizeX || y >= GameSettings.Instance.ownedgridSizeY)
+        if (hoverVisual || position.x >= GameSettings.Instance.ownedgridSizeX || position.y >= GameSettings.Instance.ownedgridSizeY)
         {
             tileColor = new Color(0.5f, 0.5f, 0.5f, 1f);
             coverColor = new Color(0.5f, 0.5f, 0.5f, 1f);
@@ -190,8 +189,8 @@ public class Tile// : MonoBehaviour
             }
         }
         // REFRESH TILE BASE
+        Debug.LogError("Position " +position.x + "/"+ position.y+ " Type" +type+ " Path "+tilePath);
         UnityEngine.Tilemaps.Tile tile = Resources.Load<UnityEngine.Tilemaps.TileBase>(tilePath) as UnityEngine.Tilemaps.Tile;
-        //Debug.LogError("Position " +x + "/"+ y+ " Type" +type+ " Path "+tilePath);
         tile.color = tileColor;
         if (tile != null) 
         {

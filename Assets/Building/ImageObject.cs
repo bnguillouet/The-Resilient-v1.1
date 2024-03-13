@@ -89,7 +89,13 @@ public class ImageObject : MonoBehaviour
             transform.position = new Vector3((position.x-position.y)*0.5f,deltay,1);
             //buildingImage.rectTransform.sizeDelta = new Vector2(0.5f, 0.5f);
         }
-        else {Debug.Log("La tuile avec le nom " + imageObjectPath + subMode + "_Back n'a pas été trouvée dans les ressources.");}
+        else 
+        {
+            Debug.Log("La tuile avec le nom " + imageObjectPath + subMode + "_Back n'a pas été trouvée dans les ressources.");
+            //S'il existe on vide l'image du main
+            mainImage.color = new Color(0.5f,0.5f,0.5f,0f);
+        }
+
         if (color != Color.white)
         {
             BuildingTexture = Resources.Load<Texture2D>(imageObjectPath + subMode + "_on");
