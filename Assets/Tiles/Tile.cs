@@ -82,7 +82,7 @@ public class Tile// : MonoBehaviour
             if (GameSettings.Instance.DifficultyLevel == 2){waterLevel -= 2;}
         }
         if (type == TileType.Water || type == TileType.Building){vegetationLevel = 0;}
-        else {vegetationLevel = Random.Range(1, 6);}
+        else {vegetationLevel = Random.Range(2, 4);}
 
         biodiversityQuantity = Random.Range(4, 8);
         if (GameSettings.Instance.DifficultyLevel == 2){biodiversityQuantity -= 2;}
@@ -93,7 +93,7 @@ public class Tile// : MonoBehaviour
     {
         vegetationFrontObject = new GameObject("Tile_Front_" + position.x + "_" + position.y);
         vegetationFront = vegetationFrontObject.AddComponent<ImageObject>();
-        vegetationFront.Initialize (/*null, null,*/ this, "Plants/Vegetation/Grass2", 8, position, new Vector2Int(-1,-1), "", -1, Color.white, 100); 
+        vegetationFront.Initialize (null, /*null,*/ this, "Plants/Vegetation/Grass2", 8, position, new Vector2Int(-1,-1), "", -1, Color.white, 100); 
     }
     /*******************************************************/
     /********** FIN INITIALISATION DE LA TILE **************/
@@ -110,7 +110,6 @@ public class Tile// : MonoBehaviour
 
     public void UpdateTileView()
     {   
-        Debug.LogError("UpdateTileImage");
         if(type == TileType.Water && vegetationLevel > 5){vegetationLevel = 5;}
         string tilePath = null; 
         string coverPath = null;  

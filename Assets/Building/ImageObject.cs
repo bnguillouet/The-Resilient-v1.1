@@ -19,7 +19,7 @@ public class ImageObject : MonoBehaviour
     public Color color;
     public bool canBuild;
 
-    public void Initialize(/*Building buildingInput, Plant plantInput,*/ Tile tileInput, string imageObjectPathInput, int orderInput, Vector2Int positionInput, Vector2Int positionExtInput, string subMode, int sizeInput, Color colorInput, int transparency) // typeCanvas = 0 avant, 1 arriere, 2 interieur
+    public void Initialize(Building buildingInput, /*Plant plantInput,*/ Tile tileInput, string imageObjectPathInput, int orderInput, Vector2Int positionInput, Vector2Int positionExtInput, string subMode, int sizeInput, Color colorInput, int transparency) // typeCanvas = 0 avant, 1 arriere, 2 interieur
     {
         /*building = buildingInput;
         plant = plantInput;*/
@@ -113,5 +113,7 @@ public class ImageObject : MonoBehaviour
         imageObjectPath = imageObjectPathInput;
         LoadImage(subMode, transparency, hover);
     }
+
+
 }
         

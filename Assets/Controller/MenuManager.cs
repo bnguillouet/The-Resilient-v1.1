@@ -31,7 +31,6 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
     private GameObject activeSubMenu;
     public GameObject viewOptionMenu;
     private RawImage activeImage;
-    /*private int activeMenuIndex;*/
     public Button activeTileInfoButton;
     public Button activePlantInfoButton;
     public Button activeViewButton;
@@ -47,14 +46,13 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
     public UnityEvent onClickEvent;
     public bool inside;
 
-/*
+
     public void ToggleSubMenu(RawImage image, string Menutype, int menuIndex)
     {
-        TileGrid.Instance.previewmap.ClearAllTiles();
-        ActionContext.Instance.HideActionMenu(); // Desactiver le panel action
+        ReinitializeScreen();
         if (activeImage != image)
         {
-            TileInteraction.Instance.previewObject.SetActive(false);
+            //TileInteraction.Instance.previewObject.SetActive(false);
             if (activeImage != null)
             {
                 activeImage.color = Color.white; // Réinitialisez la couleur de l'image active précédente
@@ -92,10 +90,10 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         activeImage = null;
     }
 
-    public void ChangeMenu()
+    /*public void ChangeMenu()
     {
         
-    }
+    }*/
 
     public void UpdateTextInfo(string text)
     {
@@ -160,9 +158,9 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         {
             Debug.LogError("Passe dans update");
             mode = 3;
-            subTypeCount = PlantManager.plantInfos.Where(p => p.Type == type).Select(p => p.SubType).Distinct().Count();
+            /*subTypeCount = PlantManager.plantInfos.Where(p => p.Type == type).Select(p => p.SubType).Distinct().Count();
             subTypes = PlantManager.plantInfos.Where(p => p.Type == type).Select(p => p.SubType).Distinct().ToList();
-            subTypeWithMostPlantInfo = PlantManager.plantInfos.GroupBy(p => p.SubType).OrderByDescending(g => g.Count()).Select(p => p.Count()).FirstOrDefault();
+            subTypeWithMostPlantInfo = PlantManager.plantInfos.GroupBy(p => p.SubType).OrderByDescending(g => g.Count()).Select(p => p.Count()).FirstOrDefault();*/ // TO DO : A REMETTRE
         } 
         else //if (type == "Building")
         {
@@ -193,7 +191,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
             List<(string, int)> items = new List<(string, int)>();
             if (type != "Building" && type != "Structure" )
             {
-                items = PlantManager.plantInfos.Where(p => p.Type == type).Where(p => p.SubType == subType).Select(p => (p.Name, 1)).ToList();
+                items = null; //PlantManager.plantInfos.Where(p => p.Type == type).Where(p => p.SubType == subType).Select(p => (p.Name, 1)).ToList();
             }
             else if (type == "Building")
             {
@@ -245,7 +243,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
     {
         ActionContext.Instance.HideActionMenu();
         GameSettings.Instance.hoverMode = mode;        
-        if (mode == 3) {PlantManager.UpdatePlantToBuild (name);} //Mode Plante
+        if (mode == 3) {/*PlantManager.UpdatePlantToBuild (name);*/} //Mode Plante //TO DO : A REMETTRE
         else if (mode == 2) {Settlement.UpdateBlueprintToBuild (name);} //Mode batiment       
         WhitedIcons();        
         UnityEngine.Transform plantTransform = subMenu.transform.Find("Icon_"+name); 
@@ -291,51 +289,9 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
 
 
-    public void UpdateAllTile()
-    {
-        for (int i = 0; i < GameSettings.Instance.ownedgridSizeX; i++)
-        {
-            for (int j = 0; j < GameSettings.Instance.ownedgridSizeY; j++)
-            {
-                TileGrid.Instance.tiles[i,j].UpdateTileView();
-            }
-        }   
-    }
 
 
-    private void OnTileInfoButtonClick() //rouge TileInfo
-    {
-        ActionContext.Instance.HideActionMenu(); // Desactiver le panel action
-        onClickEvent.Invoke();
-        GameSettings.Instance.hoverMode = 1;
-    }
-
-    private void OnWaterClick() //mode PlantInfo
-    {
-    }
-
-    private void OnPropertyClick() //mode Achat Terrain
-    {
-        if (GameSettings.Instance.hoverMode != 10)
-        {     
-            GameSettings.Instance.hoverMode = 10;
-            UpdatePropertyPreview(new Vector3Int(0,0,0));
-            TurnContext.Instance.ForcePause();
-        } 
-        else
-        {
-            GameSettings.Instance.hoverMode = 1;
-            TileGrid.Instance.previewmap.ClearAllTiles();
-        }
-           
-    }
-
-    private void OnInventoryClick() //mode PlantInfo
-    {
-        Inventory.Instance.OpenInventory();           
-    }
-
-    public void BuyProperty(Vector3Int position)
+    public void BuyProperty(Vector2Int position)
     {
         int cost = 0;
         if (position.x >= GameSettings.Instance.ownedgridSizeX && position.x < GameSettings.Instance.ownedgridSizeX + 10 && position.y >= 0 && position.y < GameSettings.Instance.ownedgridSizeY)
@@ -366,19 +322,20 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
 
 
-*/
+
 
 
     public void ReinitializeScreen()
     {
         /*ActionContext.Instance.HideActionMenu();
-        TileGrid.Instance.previewmap.ClearAllTiles();*/ //TO DO : A remettre
+        TileGrid.Instance.previewmap.ClearAllTiles();
+        TileInteraction.Instance.previewObject.SetActive(false); */ //TO DO : A remettre
     }
 
 
 
 
-    public string UpdatePropertyPreview(Vector3Int position)
+    public string UpdatePropertyPreview(Vector2Int position)
     {
         return "UpdatePropertyPreview()";
         /*Color color = new Color(1.0f, 0.0f, 0.0f, 0.2f);
@@ -504,7 +461,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         if (GameSettings.Instance.hoverMode != 10)
         {     
             GameSettings.Instance.hoverMode = 10;
-            UpdatePropertyPreview(new Vector3Int(0,0,0));
+            UpdatePropertyPreview(new Vector2Int(0,0));
             TurnContext.Instance.ForcePause();
         } 
         else
@@ -524,7 +481,13 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
     public void UpdateAllTile()
     {
-        
+        for (int i = 0; i < GameSettings.Instance.ownedgridSizeX; i++)
+        {
+            for (int j = 0; j < GameSettings.Instance.ownedgridSizeY; j++)
+            {
+                TileGrid.Instance.tiles[i,j].UpdateTileView();
+            }
+        }   
     }
 
 
