@@ -241,7 +241,8 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
     public void UpdateItemConstruct (string name, int mode) // mode 2 = Building; mode 3 = Plant
     {
-        ActionContext.Instance.HideActionMenu();
+        //ActionContext.Instance.HideActionMenu();
+        ReinitializeScreen();
         GameSettings.Instance.hoverMode = mode;        
         if (mode == 3) {/*PlantManager.UpdatePlantToBuild (name);*/} //Mode Plante //TO DO : A REMETTRE
         else if (mode == 2) {Settlement.UpdateBlueprintToBuild (name);} //Mode batiment       
