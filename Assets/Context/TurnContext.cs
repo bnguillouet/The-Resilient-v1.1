@@ -19,11 +19,23 @@ public class TurnContext : MonoBehaviour
     public float timer { get; set; }
     public int speed { get; set; }
     public int level { get; set; }
+    public string campName { get; set; }
     public Button timerButton;
     public GameObject pauseScreen; 
     public Image filterScreen; 
     public  TextMeshProUGUI timerText;
     public  TextMeshProUGUI dateText, sunnyText, rainText, tempText, minTempText, windText;
+    public  TextMeshProUGUI campNameText;
+    public Toggle stockToggle, wasteToggle, gourmetToggle, varietyToggle;
+    public Toggle oldToggle, bigToggle, lessFitToggle;
+    public Toggle moreProductionToggle, lessImportantToggle, morePresentToggle;
+    public Toggle minTempToggle, mediumTempToggle, highTempToggle;
+    public Button settingsOkButton;
+    public GameObject SettingsGameObject;
+    public string foodSelection = "More Stock";
+    public string animalSlaughter = "Older";
+    public int heatingLevel = 15;
+
 
     // Méthode pour avancer d'un tour de jeu
     public void NextTurn()
@@ -33,9 +45,26 @@ public class TurnContext : MonoBehaviour
         if (month == 13) {month = 1; year ++;} 
         UpdateWeither();
         UpdateFilter();
-        timer = 30f; //Timer réinitialiser -TO DO : Dynamique en fonction du mois
+        timer = GetDayLength(month);
         //Tribe tribe = Tribe.Instance;
     }
+
+    public void OnOkButtonSettingsClick()
+    {
+        if (stockToggle.isOn){foodSelection = "More Stock";}
+        else if (wasteToggle.isOn){foodSelection = "Less Waste";}
+        else if (gourmetToggle.isOn){foodSelection = "Gourmet";}
+        else if (varietyToggle.isOn){foodSelection = "  ";}
+        if (oldToggle.isOn){animalSlaughter = "Older";}
+        else if (bigToggle.isOn){animalSlaughter = "Stronger";}
+        else if (lessFitToggle.isOn){animalSlaughter = "Less Fit";}
+        if (minTempToggle.isOn){heatingLevel = 12;}
+        else if (mediumTempToggle.isOn){heatingLevel = 15;}
+        else if (highTempToggle.isOn){heatingLevel = 18;}
+        campName = campNameText.text;
+        SettingsGameObject.SetActive(false);
+    }
+
     void Update()
     {
         timer = timer - Time.deltaTime * speed * speed;
@@ -55,23 +84,18 @@ public class TurnContext : MonoBehaviour
             speed = 0;
             UpdateTimeButton();
             UpdateTurnContext();
-            /*
-            foreach (Plant plant in PlantManager.plants)
-            {
-                plant.ChangeMonth();
-            }*/
-            for (int x = 0; x < GameSettings.Instance.ownedgridSizeX; x++)
-            {
-                for (int y = 0; y < GameSettings.Instance.ownedgridSizeY; y++) 
-                {
-                    TileGrid.Instance.tiles[x,y].NextMonth();
-                }
-            }
-            /*Settlement.Instance.NextMonth();
-            */ //TO DO : Remettre les appels de méthode ChangeMonth pour les plants, Tile et Settlement.
-            //PlantManager.ListPlants();
-            Debug.LogError($"Update ----- Nous voici en {month}/{year}");
+            
+            PlantManager.Instance.NextMonth();
+            TileGrid.Instance.NextMonth();
+            Settlement.Instance.NextMonth();
+            Tribe.Instance.NextMonth();
+            EventContext.Instance.LaunchEndMonthEvent();
+            EventPile.Instance.InitScrollBar();
+            Inventory.Instance.UpdateMarketForMonth();
+            EventPile.Instance.AddEvent("------- Nous voici en "+ ActuelMonth() + " -------", "None",  2, new Vector2Int(-1,-1));
+            Debug.Log($"Change Month : {month}/{year}");
         }
+        if (Input.GetKeyDown(KeyCode.C)){} //TEST
     }
 
     public void ForcePause()
@@ -92,8 +116,11 @@ public class TurnContext : MonoBehaviour
         {
             Instance = this;
             NewGame();
+            
             if (timerButton == null){timerButton = GetComponent<Button>();}
             if (timerButton != null){timerButton.onClick.AddListener(OnTimerButtonClick);}
+            if (settingsOkButton == null){settingsOkButton = GetComponent<Button>();}
+            if (settingsOkButton != null){settingsOkButton.onClick.AddListener(OnOkButtonSettingsClick);};
         }
         else
         {
@@ -105,13 +132,14 @@ public class TurnContext : MonoBehaviour
     {
         year = 2040;
         month = 3;
-        money = 100000;
-        timer = 30f;
+        money = 0;
+        timer = GetDayLength(month);
         speed = 1;
-        level = 1;
+        level = 3;
         UpdateWeither();
         UpdateFilter();
         UpdateTurnContext();
+        //Inventory.Instance.UpdateMarketForMonth();
     }
 
     public void UpdateFilter()
@@ -147,18 +175,31 @@ public class TurnContext : MonoBehaviour
 
     public void UpdateWeither() // TO DO : Mettre a jour des temperature random suivant un climat + changement climatique
     {
-        if (month == 1) {temperature = 3; sunlight = 3;windIntensity = 60; rainlevel = 400;}
-        else if (month == 2) {temperature = 5; sunlight = 4; windIntensity = 50; rainlevel = 200;}
-        else if (month == 3) {temperature = 10; sunlight = 5;windIntensity = 70; rainlevel = 250;}
-        else if (month == 4) {temperature = 14; sunlight = 6;windIntensity = 30; rainlevel = 150;}
-        else if (month == 5) {temperature = 19; sunlight = 7;windIntensity = 20; rainlevel = 100;}
-        else if (month == 6) {temperature = 24; sunlight = 8;windIntensity = 30; rainlevel = 70;}
-        else if (month == 7) {temperature = 28; sunlight = 9;windIntensity = 10; rainlevel = 50;}
-        else if (month == 8) {temperature = 27; sunlight = 8;windIntensity = 0; rainlevel = 100;}
-        else if (month == 9) {temperature = 19; sunlight = 6;windIntensity = 40; rainlevel = 150;}
-        else if (month == 10) {temperature = 10; sunlight = 4;windIntensity = 70; rainlevel = 350;}
-        else if (month == 11) {temperature = 7; sunlight = 3; windIntensity = 90; rainlevel = 500;}
-        else if (month == 12) {temperature = 5; sunlight = 2; windIntensity = 70; rainlevel = 350;}
+        if (month == 1) {temperatureMin = -4; temperature = 3; sunlight = 3;windIntensity = 60; rainlevel = 400;}
+        else if (month == 2) {temperatureMin = -1;  temperature = 5; sunlight = 4; windIntensity = 50; rainlevel = 200;}
+        else if (month == 3) {temperatureMin = 3; temperature = 10; sunlight = 5;windIntensity = 70; rainlevel = 250;}
+        else if (month == 4) {temperatureMin = 6; temperature = 14; sunlight = 6;windIntensity = 30; rainlevel = 150;}
+        else if (month == 5) {temperatureMin = 10; temperature = 19; sunlight = 7;windIntensity = 20; rainlevel = 100;}
+        else if (month == 6) {temperatureMin = 11; temperature = 24; sunlight = 8;windIntensity = 30; rainlevel = 70;}
+        else if (month == 7) {temperatureMin = 13; temperature = 28; sunlight = 9;windIntensity = 10; rainlevel = 50;}
+        else if (month == 8) {temperatureMin = 13; temperature = 27; sunlight = 8;windIntensity = 0; rainlevel = 100;}
+        else if (month == 9) {temperatureMin = 7; temperature = 19; sunlight = 6;windIntensity = 40; rainlevel = 150;}
+        else if (month == 10) {temperatureMin = 1; temperature = 10; sunlight = 4;windIntensity = 70; rainlevel = 350;}
+        else if (month == 11) {temperatureMin = -1; temperature = 7; sunlight = 3; windIntensity = 90; rainlevel = 500;}
+        else if (month == 12) {temperatureMin = -4; temperature = 5; sunlight = 2; windIntensity = 70; rainlevel = 350;}
+    }
+    public static int GetDayLength(int monthInput)
+    {
+        // Approximate day length calculation
+        double declination = 23.45 * Math.Sin(Math.PI * (284 + monthInput * 30) / 180);
+        double hourAngle = Math.Acos(-Math.Tan(GameSettings.Instance.latitude * Math.PI / 180) * Math.Tan(declination * Math.PI / 180));
+        double dayLength = Math.Min(2 * hourAngle * 24 / (2 * Math.PI),11);
+        int timer = (int)(dayLength * 15);
+        if (GameSettings.Instance.DifficultyLevel == 2)
+        {
+            timer = (int)(dayLength * 13);
+        }
+        return timer;
     }
 
     public void UpdateTurnContext()
@@ -186,5 +227,10 @@ public class TurnContext : MonoBehaviour
         else if (index == 11){ return "Novembre";}
         else if (index == 12){ return "Décembre";}
         else {return "Inconnu";}
+    }
+
+    public string ActuelMonth()
+    {
+        return NumberToMonth(month) + " " + year;
     }
 }

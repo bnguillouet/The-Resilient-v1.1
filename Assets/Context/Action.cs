@@ -6,11 +6,11 @@ public class Action
     public string actionName { get; set; }
     public string subActionName { get; set; }
     public string actionCategorie { get; set; }
-    /*public Plant plant { get; private set; }*/
+    public Plant plant { get; private set; }
     public Tile tile { get; private set; }
     public Building building { get; private set; }
     public Character selectedHuman { get; private set; }
-    public Vector3Int actionPosition { get; set; }
+    public Vector2Int actionPosition { get; set; }
     public int specific { get; set; }
     public List<(List<string>, int)> ingredients { get; set; }
     public List<(string, int, int)> production { get; set; }
@@ -25,13 +25,13 @@ public class Action
     /********************************************/
     //public Action(string actionname, string subactionname, string actioncategorie, Plant plantinput, Tile tileinput, Building buildinginput , Character human, Vector3Int position, Transform transforminput, int timerinput, bool feasibleinput, string nofeasiblereason)
     public Action(string actionname, string subactionname, string actioncategorie, 
-    /*Plant plantinput,*/ Tile tileinput, Building buildinginput , Character human, Vector3Int position, 
+    Plant plantinput, Tile tileinput, Building buildinginput , Character human, Vector2Int position, 
     int specificinput, List<(List<string>, int)> ingredientsinput, List<(string, int, int)> productioninput, int timerinput, bool feasibleinput, string nofeasiblereason)
     {
         actionName = actionname;
         subActionName = subactionname;
         actionCategorie = actioncategorie; //Sert a l'icone et au type global d'action
-        /*plant = plantinput;*/
+        plant = plantinput;
         tile = tileinput;
         building = buildinginput;
         selectedHuman = human;
@@ -51,7 +51,7 @@ public class Action
 
     public void BeginExecution()
     {
-        Debug.LogWarning("L'action s'execute");
+        //Debug.LogWarning("Execute Action");
         bool consumeIngredients = ConsumeIngredients();
 
         if (consumeIngredients)
@@ -64,26 +64,87 @@ public class Action
             case 1: //Recolte
                 
                 break;
+
             case 2: //Construire un batiment
                 building.state = 0; // Statut du batiment à "Normal"
                 building.UpdateBuildingObject();
+                EventPile.Instance.AddEvent("Un nouveau batiment a été construit : " + building.buildingName, "Construct",  1, actionPosition);
                 break;
-            /*case 3: //Planter 
+
+            case 3: //Planter 
                 plant.state = "Normal"; // Statut de la plante à "Normal"
-                plant.ChangeVisual();
-                break;*/
+                plant.UpdatePlantObject();
+                if (plant is Tree tree)
+                {
+                    EventPile.Instance.AddEvent("Un nouvel arbre a été planté : " + tree.plantName, "Plant",  1, actionPosition);
+                }
+                break;
+
             case 5: //Couper l'herbe
                 tile.CutGrass();
                 break;
+
             case 7: //Finir construction
                 // TO DO
                 break;
+
             case 8: //Réparer
                 building.state = 0; building.UpdateBuildingObject();
                 break;
-            /*case 11: //Couper ou arracher plante
+
+            case 11: //Couper ou arracher plante
                 plant.Cut();
-                break;*/
+                Debug.Log("Plante arrachée");
+                ProductionIcon("Déchet vert", 1);
+                break;
+
+            case 12: // Abattre un arbre
+                //plant.Cut();
+                Debug.Log("Arbre coupé");
+                if (plant is Tree tree2)
+                {
+                    int quantity = tree2.CutProduction();
+                    ProductionIcon("Tronc", quantity);
+                    EventPile.Instance.AddEvent("Un arbre a été arraché : " + tree2.plantName +" ("+ quantity +" Tronc)", "Plant",  0, actionPosition);
+                }
+                else{ Debug.LogError("Erreur : La plante n'est pas un arbre."); }
+                break;
+
+            case 13: // Tailler un arbre
+                Debug.Log("Arbre taillé");
+                if (plant is Tree tree3)
+                {
+                    ProductionIcon("Bois chauffage", tree3.TrimProduction());
+                }
+                else{ Debug.LogError("Erreur : La plante n'est pas un arbre."); }
+                break;
+            case 51: //S'installer dans une maison
+                ((Human)selectedHuman).InstallInHouse(((House)building));
+                break;
+            case 61: //Installer une poule
+                ((ChickenCoop)building).PutChicken();
+                break;
+            case 62: //Enlever une poule
+                ((ChickenCoop)building).RemoveChicken();
+                break;
+            case 63: //Nettoyer et Récolter
+                int[] values = ((ChickenCoop)building).CleanandCollect();
+                Debug.LogError("nombre d'oeuf :" + values[0]);
+                if (values[0] > 0){ProductionIcon("Oeuf", values[0]);}
+                //TO DO : Ajouter production de compost de poule ?
+                break;
+            case 65: //Ajouter céréales
+                ((ChickenCoop)building).PutCereal();
+                break;
+            case 66: //Ajouter dechets verts
+                ((ChickenCoop)building).PutGreenFood();
+                break;
+            case 67: //Ajouter légumes
+                ((ChickenCoop)building).PutVegetableFood();
+                break;
+            case 68: //Plumer une poule
+                ((ChickenCoop)building).PluckChicken();
+                break;
             case 71: //Vider les déchets alimentaires
                 ((Composter)building).AddHouseGarbage();
                 break;
@@ -93,14 +154,25 @@ public class Action
             case 82: //Enlever une hausse
                 ((BeeHive)building).RemoveRise();
                 break;
-            case 83: //Installer un essein
+            case 83: //Installer un esseim
                 ((BeeHive)building).PutSwarm();
+                break;
+            case 84: //Enlever un esseim
+                ((BeeHive)building).RemoveSwarm();
                 break;
             case 91: //Ajouter de la sciure de bois
                 ((DryToilet)building).FillSawdust();
                 break;
             case 92: //Nettoyer
                 ((DryToilet)building).Clean();
+                break;
+            case 200: //Partir en formation
+                string availableTrainingExtracted = subActionName.Replace("Apprendre : ", "");
+                ((Human)selectedHuman).AddSkill(availableTrainingExtracted, true);
+                EventPile.Instance.AddEvent(((Human)selectedHuman).FirstName + " a appris la compétence " + availableTrainingExtracted , "None",  2, new Vector2Int(0,0));
+                break;
+            case 201: //Cueillette en forêt
+                
                 break;
             case 301: //Ajouter du compost
                 
@@ -135,7 +207,7 @@ public class Action
             case 315: //Epandre des copeaux de bois
                 tile.MulchSoil(4);
                 break;
-            case 999: //Couper l'herbe
+            case 999: //Détruire batîment
                 building.Destroy();
                 break;
 
@@ -174,6 +246,7 @@ public class Action
     {
         bool feasible = true;
         int totalQuantity = 0;
+        Dictionary<string, int> consumedIngredients = new Dictionary<string, int>();
         if (ingredients != null) // Vérifiez si les ingrédients sont disponibles dans l'inventaire
         {
             foreach (var (ingredientNames, quantity) in ingredients)
@@ -189,15 +262,24 @@ public class Action
                             Inventory.Instance.ChangeItemStock(ingredient, -1);
                             quantityturn ++;
                             totalQuantity ++;
+                            if (consumedIngredients.ContainsKey(ingredient)){consumedIngredients[ingredient]++;}
+                            else{consumedIngredients[ingredient] = 1;}
                         }
                     }
                     if(quantityturn == 0)
                     {
+                        foreach (var consumed in consumedIngredients)
+                        {
+                            //TO DO : Remettre en stock
+                        }
                         return false;
                     }
-                    // TO DO : Ajouter le retour des quantités avant que le décrément ait lieu
                 }
             }
+        }
+        foreach (var consumed in consumedIngredients)
+        {
+            ConsumeIcon(consumed.Key, consumed.Value);
         }
         return true;
     }
@@ -207,7 +289,18 @@ public class Action
         foreach (var item in production)
         {
             Inventory.Instance.ChangeItemStock(item.Item1, item.Item2);
-            Debug.Log("Nouveau stock de "+ item.Item1 +": "+ Inventory.Instance.GetItemStock(item.Item1)); // TO DO : Ajouter un petit icone avec l'ajout
+            Debug.Log("Nouveau stock de "+ item.Item1 +": "+ Inventory.Instance.GetItemStock(item.Item1));
+            ProductionIcon(item.Item1, item.Item2);
         }
+    }
+
+    public void ProductionIcon(string item, int quantity)
+    {
+        ProductionTotem.Instance.CreateProductTotem(Inventory.Instance.GetURLImage(item), actionPosition, quantity, true);
+        //EventPile.Instance.AddEvent("Ajout de " + quantity + "",  2, new Vector2Int(-1,-1)); ADAPTER POUR ICONE
+    }
+    public void ConsumeIcon(string item, int quantity)
+    {
+        ProductionTotem.Instance.CreateProductTotem(Inventory.Instance.GetURLImage(item), actionPosition, quantity, false);
     }
 }

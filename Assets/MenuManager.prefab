@@ -1030,9 +1030,6 @@ GameObject:
   - component: {fileID: 6185106082462220112}
   - component: {fileID: 7523768003917400152}
   - component: {fileID: 8616666511084360468}
-  - component: {fileID: 5451305270267993318}
-  - component: {fileID: 516491442150963576}
-  - component: {fileID: 7939158573301085997}
   m_Layer: 5
   m_Name: MenuManager
   m_TagString: Untagged
@@ -1129,75 +1126,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5451305270267993318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2781142839482941307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f653ba4e27702d4d92a75671f49b675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverText: {fileID: 7133235664932867414}
---- !u!114 &516491442150963576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2781142839482941307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ffc231fdc30b58458379756f949bbbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildSubMenu: {fileID: 5892729912857027068}
-  landscapeSubMenu: {fileID: 8613591275214349467}
-  buildImage: {fileID: 2001968369767537000}
-  landscapeImage: {fileID: 7258702540813216443}
-  viewOptionMenu: {fileID: 4439201758478887170}
-  activeViewButton: {fileID: 1965815133447868366}
-  clayViewButton: {fileID: 7995041399501657967}
-  sandViewButton: {fileID: 4448266327024406379}
-  siltViewButton: {fileID: 7559152908552507664}
-  waterViewButton: {fileID: 3544126025209876426}
-  phViewButton: {fileID: 3157123071922047406}
-  onClickEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  house1Image: {fileID: 2153232838227458223}
-  warehouse1Image: {fileID: 1449701455216334715}
---- !u!114 &7939158573301085997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2781142839482941307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ffc231fdc30b58458379756f949bbbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildSubMenu: {fileID: 0}
-  landscapeSubMenu: {fileID: 0}
-  buildImage: {fileID: 0}
-  landscapeImage: {fileID: 0}
-  viewOptionMenu: {fileID: 0}
-  activeViewButton: {fileID: 0}
-  clayViewButton: {fileID: 0}
-  sandViewButton: {fileID: 0}
-  siltViewButton: {fileID: 0}
-  waterViewButton: {fileID: 0}
-  phViewButton: {fileID: 0}
-  onClickEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  house1Image: {fileID: 2153232838227458223}
-  warehouse1Image: {fileID: 1449701455216334715}
 --- !u!1 &2983891782729804218
 GameObject:
   m_ObjectHideFlags: 0

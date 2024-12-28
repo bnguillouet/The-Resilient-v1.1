@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using System.IO;
 public class GameSettings : MonoBehaviour
 {
     public static GameSettings Instance; // Singleton pour accéder facilement aux paramètres du jeu
@@ -13,8 +14,10 @@ public class GameSettings : MonoBehaviour
     public int viewtileMode = 0; // 0 = Normal; 1 = Niveau argile; 
     public string theme = "Breton"; // Français, Breton, Quebecois, Aquitain, ...
     
+    public int latitude = 48;
+
     public string SoilType = "Bog"; // Bog ou Limestone, Sand ou Clay ou Normal
-    public int DifficultyLevel = 0; // 0 = Easy; 1 = Medium; 2 = Hard
+    public int DifficultyLevel = 99; // 0 = Easy; 1 = Medium; 2 = Hard
     
     /*Attributs du menu principale */
     public Toggle bretonToggle, quebecToggle;
@@ -59,11 +62,13 @@ public class GameSettings : MonoBehaviour
     }
     public void OnLoadButtonClick()
     {
-        
+        Settlement.Instance.LoadSettlement(Application.persistentDataPath + "/settlement_save.json");
     }    
     public void OnSaveButtonClick()
     {
-        
+        //string filePath = Path.Combine(, "tribe_save.json");
+        Tribe.Instance.SaveTribe(Application.persistentDataPath + "/tribe_save.json");
+        Settlement.Instance.SaveSettlement(Application.persistentDataPath + "/settlement_save.json");
     }    
     public void OnSettingButtonClick()
     {
@@ -89,10 +94,10 @@ public class GameSettings : MonoBehaviour
         if (sandToggle.isOn){SoilType = "Sand";}
         if (clayToggle.isOn){SoilType = "Clay";}
         DifficultyLevel = Mathf.RoundToInt(difficultySlider.value); // Arrondi à l'entier le plus proche
+        if (DifficultyLevel == 3) {DifficultyLevel = 99;} 
         waterFrequency = Mathf.RoundToInt(waterSlider.value);
-        gridSize = Mathf.RoundToInt(sizeSlider.value * 10);
-        Debug.LogError("Réinitialisation");
-        //TileGrid.Instance.LaunchGame(); //TO DO .  A remettre
+        gridSize = Mathf.RoundToInt(sizeSlider.value * 20);
+        TileGrid.Instance.LaunchGame();
         newGameGameObject.SetActive(false);
     }
 
@@ -105,31 +110,40 @@ public class GameSettings : MonoBehaviour
                 menuGameObject.SetActive(false);
                 newGameGameObject.SetActive(false);
             }
-            else
+            else if (hoverMode == 9)
+            {
+                MenuManager.Instance.HideSubMenu();
+            }
+            else 
             {
                 menuGameObject.SetActive(true);
             }
         }
-        int valeurDifficulty = Mathf.RoundToInt(difficultySlider.value); // Arrondit à l'entier le plus proche
-        string difficulty = "Hard";
-        if (valeurDifficulty == 0) {difficulty = "Easy";}
-        else if (valeurDifficulty == 1) {difficulty = "Normal";}
-        difficultyText.text = "Difficulty : "+ difficulty;
+        if (newGameGameObject.activeSelf) //Update Toggle values when the newGameGameObject if active
+        {
+            int valeurDifficulty = Mathf.RoundToInt(difficultySlider.value); // Arrondit à l'entier le plus proche
+            string difficulty = "Hard";
+            if (valeurDifficulty == 0) {difficulty = "Easy";}
+            else if (valeurDifficulty == 1) {difficulty = "Normal";}
+            else if (valeurDifficulty == 3) {difficulty = "God !";}
+            difficultyText.text = "Difficulty : "+ difficulty;
 
-        int valeurWater = Mathf.RoundToInt(waterSlider.value); // Arrondit à l'entier le plus proche
-        string water = "River";
-        if (valeurWater == 0) {water = "None";}
-        else if (valeurWater == 1) {water = "Unfrequent";}
-        else if (valeurWater == 2) {water = "Normal";}
-        else if (valeurWater == 3) {water = "Abundant";}
-        waterText.text = "Water Frequency : "+ water;    
+            int valeurWater = Mathf.RoundToInt(waterSlider.value); // Arrondit à l'entier le plus proche
+            string water = "River";
+            if (valeurWater == 0) {water = "None";}
+            else if (valeurWater == 1) {water = "Unfrequent";}
+            else if (valeurWater == 2) {water = "Normal";}
+            else if (valeurWater == 3) {water = "Abundant";}
+            waterText.text = "Water Frequency : "+ water;    
 
-        int valeurSize = Mathf.RoundToInt(sizeSlider.value); // Arrondit à l'entier le plus proche
-        sizeText.text = "Map size : " + valeurSize * 10 +"x" + valeurSize * 10;
+            int valeurSize = Mathf.RoundToInt(sizeSlider.value); // Arrondit à l'entier le plus proche
+            sizeText.text = "Map size : " + valeurSize * 20 +"x" + valeurSize * 20;
+        }
     }
 
-        void ToggleValueChanged(Toggle change)
+    //TO BE DELETED
+    /*    void ToggleValueChanged(Toggle change)
     {
         Debug.Log("Le toggle est maintenant : " + change.isOn);
-    }
+    }*/
 }

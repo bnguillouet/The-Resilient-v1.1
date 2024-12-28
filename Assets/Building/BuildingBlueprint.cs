@@ -18,12 +18,13 @@ public class BuildingBlueprint
     /*********************************************/
     /********** CREATION DU BLUEPRINT ************/
     /*********************************************/
-    public BuildingBlueprint(string name, int levelinput, Vector2Int sz, int cost)
+    public BuildingBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost)
     {
         buildingName = name;
         size = sz;
         constructionCost = cost;
         isStructure = false;
+        items = itemsinput;
         level = levelinput;
     }
 
@@ -36,7 +37,14 @@ public class BuildingBlueprint
     /************************************************/
     // Default instance creation methode
     public virtual Building CreateBuilding(Vector2Int position)
+    { 
+        Pay();
+        return new Building(buildingName, position, size, constructionCost, Color.white);
+    }
+
+    public virtual Building CreateBorder(Vector2Int position, bool orientation)
     {
+        Pay();
         return new Building(buildingName, position, size, constructionCost, Color.white);
     }
     /****************************************************/
@@ -51,16 +59,49 @@ public class BuildingBlueprint
         if (level == 0 ){return 0;} // Cas non visible
         else if (level <= TurnContext.Instance.level) 
         {
-            if(TestMaterial()) {return 1;} // Cas Construction : Materiaux disponibles
-            else if (TurnContext.Instance.money > constructionCost) {return 2;} // Cas Construction : Achat du batiment
+            if(Price() == 0) {return 1;} // Cas Construction : Materiaux disponibles
+            else if (TurnContext.Instance.money > Price()) {return 2;} // Cas Construction : Achat du batiment
             else {return 3;} // Cas ni materiaux, ni argent
         }
         else {return 4;} // Cas niveau supérieur
     }
 
+    public virtual int Price()
+    {
+        int price = 0;
+        foreach (var item in items)
+        {
+            int stock = item.Item2 - Inventory.Instance.GetItemStock(item.Item1);
+            if (stock < 0){stock = 0;}
+            int priceItem = stock * Inventory.Instance.GetItemPrice(item.Item1);
+            price += priceItem; // Ajoute la quantité (ou le coût) de chaque item au prix total
+        }
+        return price;
+    }
+
+    public virtual void Pay()
+    {
+        TurnContext.Instance.money -= Price();
+        foreach (var item in items)
+        {
+            Inventory.Instance.ChangeItemStock(item.Item1, - Math.Min(item.Item2,Inventory.Instance.GetItemStock(item.Item1)));
+        }
+    }
+
+    public virtual string PayInformation()
+    {
+        string text = "Coût : "+ Price() + "$";
+        foreach (var item in items)
+        {
+            int stock = Math.Min(item.Item2, Inventory.Instance.GetItemStock(item.Item1));
+            if (stock != 0){text += " + "+ stock + " " + item.Item1;}
+        }
+        return text;
+    }
+
     public virtual bool TestMaterial() //Test si l'inventaire contient le matériel necessaire
     {
-        return true;
+        return false;
     }
     /*****************************************************/
     /********** FIN DISPONIBILITE DU BATIMENT ************/
@@ -74,15 +115,23 @@ public class BuildingBlueprint
 public class HouseBlueprint : BuildingBlueprint
 {
     public int numberOfOccupants;
-    public HouseBlueprint(string name, int levelinput, Vector2Int sz, int cost, int occupants)
-        : base(name, levelinput, sz, cost)
+    public HouseBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int occupants)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         numberOfOccupants = occupants;
         isStructure = false;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
-        return new House(buildingName, position, size, constructionCost, numberOfOccupants);
+    { 
+        Pay();
+        Color color = new Color(1,1,1,0);
+        if (buildingName == "House_4")
+        {
+            int randomcolor = UnityEngine.Random.Range(0, 3);
+            if (randomcolor == 1){color = new Color(150/ 255f, 204/ 255f, 159/ 255f);}
+            else if (randomcolor ==2){color = new Color(202/ 255f, 150f/ 255f, 191f/ 255f);}
+        }
+        return new House(buildingName, position, size, constructionCost, numberOfOccupants, color);
     }
 }
 
@@ -92,14 +141,15 @@ public class HouseBlueprint : BuildingBlueprint
 public class BarnBlueprint : BuildingBlueprint
 {
     public int storageCapacity;
-    public BarnBlueprint(string name, int levelinput, Vector2Int sz, int cost, int capacity)
-        : base(name, levelinput, sz, cost)
+    public BarnBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int capacity)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         storageCapacity = capacity;
         isStructure = false;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new Barn(buildingName, position, size, constructionCost, storageCapacity);
     }
 }
@@ -111,15 +161,16 @@ public class WoodShelderBlueprint : BuildingBlueprint
 {
     public int woodCapacity;
 
-    public WoodShelderBlueprint(string name, int levelinput, Vector2Int sz, int cost, int capacity)
-        : base(name, levelinput, sz, cost)
+    public WoodShelderBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int capacity)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         woodCapacity = capacity;
         isStructure = false;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
-        return new Barn(buildingName, position, size, constructionCost, woodCapacity);
+    { 
+        Pay();
+        return new WoodShelder(buildingName, position, size, constructionCost, woodCapacity);
     }
 }
 
@@ -128,13 +179,14 @@ public class WoodShelderBlueprint : BuildingBlueprint
 //*************************************************************************************************************//
 public class BeeHiveBlueprint : BuildingBlueprint
 {
-    public BeeHiveBlueprint(string name, int levelinput, Vector2Int sz, int cost)
-        : base(name, levelinput, sz, cost)
+    public BeeHiveBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         Color color = new Color(1,1,1,0);
         if (buildingName == "Beehive_2")
         {
@@ -154,14 +206,15 @@ public class BeeHiveBlueprint : BuildingBlueprint
 public class ChickenCoopBlueprint : BuildingBlueprint
 {
     public int maxChicken;
-    public ChickenCoopBlueprint(string name, int levelinput, Vector2Int sz, int cost, int maxNumberChicken)
-        : base(name, levelinput, sz, cost)
+    public ChickenCoopBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int maxNumberChicken)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
         maxChicken = maxNumberChicken;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new ChickenCoop(buildingName, position, size, constructionCost, maxChicken);
     }
 }
@@ -171,13 +224,14 @@ public class ChickenCoopBlueprint : BuildingBlueprint
 //************************************************************************************************************************//
 public class DryToiletBlueprint : BuildingBlueprint
 {
-    public DryToiletBlueprint(string name, int levelinput, Vector2Int sz, int cost)
-        : base(name, levelinput, sz, cost)
+    public DryToiletBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new DryToilet(buildingName, position, size, constructionCost);
     }
 }
@@ -187,13 +241,14 @@ public class DryToiletBlueprint : BuildingBlueprint
 //****************************************************************************************************************//
 public class WoodenTubBlueprint : BuildingBlueprint
 {
-    public WoodenTubBlueprint(string name, int levelinput, Vector2Int sz, int cost)
-        : base(name, levelinput, sz, cost)
+    public WoodenTubBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new WoodenTub(buildingName, position, size, constructionCost);
     }
 }
@@ -207,8 +262,8 @@ public class ElectricityBlueprint : BuildingBlueprint
     public int maxProduction;
     public bool animated;
     
-    public ElectricityBlueprint(string name, int levelinput, Vector2Int sz, int cost, int typesource, int maxproduction, bool anim) // type 1 = éolien, 2 = photovoltaique, 3 = force eau
-        : base(name, levelinput, sz, cost)
+    public ElectricityBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int typesource, int maxproduction, bool anim) // type 1 = éolien, 2 = photovoltaique, 3 = force eau
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
         typeSource= typesource;
@@ -216,7 +271,8 @@ public class ElectricityBlueprint : BuildingBlueprint
         animated = anim; 
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new Electricity(buildingName, position, size, constructionCost, typeSource, maxProduction, animated);
     }
 }
@@ -229,15 +285,16 @@ public class WaterStorageBlueprint : BuildingBlueprint
     public int typeWater; //1 = Eau pluie, 2 = eaux grises, 3 = eau propre
     public int maxStorage;
     
-    public WaterStorageBlueprint(string name, int levelinput, Vector2Int sz, int cost, int typewater, int maxstorage) // type 1 = éolien, 2 = photovoltaique, 3 = force eau
-        : base(name, levelinput, sz, cost)
+    public WaterStorageBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int typewater, int maxstorage) // type 1 = éolien, 2 = photovoltaique, 3 = force eau
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
         typeWater= typewater;
         maxStorage = maxstorage;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new WaterStorage(buildingName, position, size, constructionCost, typeWater, maxStorage);
     }
 }
@@ -248,14 +305,15 @@ public class WaterStorageBlueprint : BuildingBlueprint
 public class SplitterBlueprint : BuildingBlueprint
 {
     public float efficiency; //Facteur de rapidité
-    public SplitterBlueprint(string name, int levelinput, Vector2Int sz, int cost, float efficience)
-        : base(name, levelinput, sz, cost)
+    public SplitterBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, float efficience)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
         efficiency = efficience;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new Splitter(buildingName, position, size, constructionCost, efficiency);
     }
 }
@@ -268,15 +326,16 @@ public class ComposterBlueprint : BuildingBlueprint
     public int maxGarbageLevel; //Vegetable 
     public int maxCompostLevel; //Facteur de rapidité
     
-    public ComposterBlueprint(string name, int levelinput, Vector2Int sz, int cost, int maxgarbagelevel, int maxcompostlevel)
-        : base(name, levelinput, sz, cost)
+    public ComposterBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int maxgarbagelevel, int maxcompostlevel)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
         maxGarbageLevel = maxgarbagelevel;
         maxCompostLevel = maxcompostlevel;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new Composter(buildingName, position, size, constructionCost, maxGarbageLevel, maxCompostLevel);
     }
 }
@@ -287,18 +346,25 @@ public class ComposterBlueprint : BuildingBlueprint
 public class EnclosureBlueprint : BuildingBlueprint
 {
     public int type; //1 = tour; 2 = barriere 
-    public int height; //Hauteur suivant le type d animal qui peut passer
+    public int height; //Hauteur suivant le type d animal qui peut passer -- 0 Sous-sol, 1 Gros Animaux, 2 Poules/Canard
     
-    public EnclosureBlueprint(string name, int levelinput, Vector2Int sz, int cost, int typeinput, int heightinput)
-        : base(name, levelinput, sz, cost)
+    public EnclosureBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost, int typeinput, int heightinput)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
         type = typeinput;
         height = heightinput;
     }
+
+    public override Building CreateBorder(Vector2Int position, bool orientation)
+    { 
+        Pay();
+        return new Enclosure(buildingName, position, size, constructionCost, type, height, orientation);
+    }
     public override Building CreateBuilding(Vector2Int position)
-    {
-        return new Enclosure(buildingName, position, size, constructionCost, type, height);
+    { 
+        Pay();
+        return new Enclosure(buildingName, position, size, constructionCost, type, height, true);
     }
 }
 
@@ -310,14 +376,15 @@ public class WorkshopBlueprint : BuildingBlueprint
     //public int type; //a voir utilité
 
     
-    public WorkshopBlueprint(string name, int levelinput, Vector2Int sz, int cost)
-        : base(name, levelinput, sz, cost)
+    public WorkshopBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = false;
         //type = typeinput;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new Workshop(buildingName, position, size, constructionCost);
     }
 }
@@ -330,14 +397,15 @@ public class GreenHouseBlueprint : BuildingBlueprint
     //public int type; //a voir utilité
 
     
-    public GreenHouseBlueprint(string name, int levelinput, Vector2Int sz, int cost)
-        : base(name, levelinput, sz, cost)
+    public GreenHouseBlueprint(string name, int levelinput, List<(string, int)> itemsinput, Vector2Int sz, int cost)
+        : base(name, levelinput, itemsinput, sz, cost)
     {
         isStructure = true;
         //type = typeinput;
     }
     public override Building CreateBuilding(Vector2Int position)
-    {
+    { 
+        Pay();
         return new GreenHouse(buildingName, position, size, constructionCost);
     }
 }

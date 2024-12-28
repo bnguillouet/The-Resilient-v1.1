@@ -43,6 +43,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
     public Button propertyButton;
     public Button inventoryButton;
     public Button waterButton;
+    public Button settingsButton;
     public UnityEvent onClickEvent;
     public bool inside;
 
@@ -61,7 +62,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
             {
                 organizationSubMenu.SetActive(false);
                 subMenu.SetActive(true);
-                UpdatePlantTypeMenu(Menutype, new Vector2Int (130,(menuIndex * -80) +1100));
+                UpdatePlantTypeMenu(Menutype, new Vector2Int (130,(menuIndex * -80) +1460)); //1100
             }
             else
             {
@@ -88,6 +89,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         GameSettings.Instance.hoverMode = 5;
         activeImage.color = Color.white;
         activeImage = null;
+        JunctionGrid.Instance.RemoveAllPoints();
     }
 
     /*public void ChangeMenu()
@@ -158,9 +160,9 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         {
             Debug.LogError("Passe dans update");
             mode = 3;
-            /*subTypeCount = PlantManager.plantInfos.Where(p => p.Type == type).Select(p => p.SubType).Distinct().Count();
+            subTypeCount = PlantManager.plantInfos.Where(p => p.Type == type).Select(p => p.SubType).Distinct().Count();
             subTypes = PlantManager.plantInfos.Where(p => p.Type == type).Select(p => p.SubType).Distinct().ToList();
-            subTypeWithMostPlantInfo = PlantManager.plantInfos.GroupBy(p => p.SubType).OrderByDescending(g => g.Count()).Select(p => p.Count()).FirstOrDefault();*/ // TO DO : A REMETTRE
+            subTypeWithMostPlantInfo = PlantManager.plantInfos.GroupBy(p => p.SubType).OrderByDescending(g => g.Count()).Select(p => p.Count()).FirstOrDefault();
         } 
         else //if (type == "Building")
         {
@@ -186,66 +188,108 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         int lineCount = 0;
         foreach (var subType in subTypes)
         {
-            Debug.LogError("subType = "+ subType);
+            /*Debug.LogError("subType = "+ subType);*/
             int lineIcon = 0;
-            List<(string, int)> items = new List<(string, int)>();
+            List<(string, int, string)> items = new List<(string, int, string)>();
             if (type != "Building" && type != "Structure" )
             {
-                items = null; //PlantManager.plantInfos.Where(p => p.Type == type).Where(p => p.SubType == subType).Select(p => (p.Name, 1)).ToList();
+                items = PlantManager.plantInfos.Where(p => p.Type == type).Where(p => p.SubType == subType).Select(p => (p.Name, 1, "-")).ToList();
             }
             else if (type == "Building")
             {
-                items = Settlement.blueprints.Where(p => !p.isStructure).Where(p => p.GetType().Name == subType).Select(p => (p.buildingName, p.Available())).ToList();
+                items = Settlement.blueprints.Where(p => !p.isStructure).Where(p => p.GetType().Name == subType).Select(p => (p.buildingName, p.Available(), p.PayInformation())).ToList();
             }
             else if (type == "Structure")
             {
-                items = Settlement.blueprints.Where(p => p.isStructure).Where(p => p.GetType().Name == subType).Select(p => (p.buildingName, p.Available())).ToList();
+                items = Settlement.blueprints.Where(p => p.isStructure).Where(p => p.GetType().Name == subType).Select(p => (p.buildingName, p.Available(), p.PayInformation())).ToList();
             }
-            foreach (var (item, available) in items) // Ajout de chaque icone pour chaque item du type mentionné
+            foreach (var (item, available, text) in items) // Ajout de chaque icone pour chaque item du type mentionné
             {
                 if (available > 0)
                 {
                     GameObject icon = new GameObject("Icon_"+item);
                     Button button = icon.AddComponent<Button>();
-                    button.onClick.AddListener(() => UpdateItemConstruct(item, mode)); // Ajout d'un gestionnaire d'événements de clic
+                    button.onClick.AddListener(() => UpdateItemConstruct(item, mode, text)); // Ajout d'un gestionnaire d'événements de clic
 
-                    
-                
                     // Ajout d'un EventTrigger pour détecter onMouseEnter
-                    EventTrigger eventTrigger = icon.AddComponent<EventTrigger>();
+                    //EventTrigger eventTrigger = icon.AddComponent<EventTrigger>();
+
 
                     Image iconImage = icon.AddComponent<Image>();
                     Texture2D texture = Resources.Load<Texture2D>("Icons/"+type+"/"+item);
                     
-                    Debug.LogError("recherche batiment : Icons/"+type+"/"+item );
-                    if (texture == null)
-                    {
-                        Debug.LogError("Image not found at path: Icons/"+type+"/"+item);
-                        return;
-                    }
+                    /*Debug.LogError("recherche batiment : Icons/"+type+"/"+item );*/
+                    if (texture == null){Debug.LogError("Image not found at path: Icons/"+type+"/"+item);return;}
                     Sprite sprite = Sprite.Create(texture, new Rect(0, 0, 200, 200), new Vector2(1f, 1f), 25);
                     iconImage.sprite = sprite;
-                    if (available > 1)
+                    if (available == 2)
                     {
-                        iconImage.color = new Color (0.5f,0.5f,0.5f,1);
+                        GameObject childObject = new GameObject("Paid");
+                        childObject.transform.SetParent(icon.transform);
+                        RectTransform childRectTransform = childObject.AddComponent<RectTransform>();
+                        childRectTransform.sizeDelta = new Vector2(50, 50);
+                        childRectTransform.anchorMin = new Vector2(1, 1);
+                        childRectTransform.anchorMax = new Vector2(1, 1);
+                        childRectTransform.pivot = new Vector2(1, 1);
+                        childRectTransform.anchoredPosition = new Vector2(10, 10);
+                        Image childImage = childObject.AddComponent<Image>();
+                        Sprite childSprite = Resources.Load<Sprite>("Menu/money");
+                        childImage.sprite = childSprite;
+                    }
+                    if (available == 3)
+                    {
+                        iconImage.color = new Color (1f,0.5f,0.5f,1f);
+                        button.interactable = false;
+                    }
+                    if (available == 4)
+                    {
+                        iconImage.color = new Color (0.5f,0.5f,0.5f,0.6f);
+                        button.interactable = false;
                     }
                     icon.transform.SetParent(subMenu.transform);
                     icon.transform.position = new Vector3((int)(position.x + ((lineIcon) * 55 )), (int)(position.y - 30 - (lineCount) * 55), 0);
                     icon.transform.localScale = new Vector3 (0.5f,0.5f,1f);
+                    
+                    //GESTION D'EVENT : INFORMATIONMANAGER
+                    EventTrigger eventTrigger = icon.AddComponent<EventTrigger>();
+                    EventTrigger.Entry entryEnter = new EventTrigger.Entry{eventID = EventTriggerType.PointerEnter};
+                    entryEnter.callback.AddListener((data) => { OnIconMouseEnter(item, mode, available, text); });
+                    eventTrigger.triggers.Add(entryEnter);
+                    EventTrigger.Entry entryExit = new EventTrigger.Entry{eventID = EventTriggerType.PointerExit};
+                    entryExit.callback.AddListener((data) => { OnIconMouseExit(); });
+                    eventTrigger.triggers.Add(entryExit);
+                    
                     lineIcon ++;
+
                 }
             }
             lineCount ++;
         }
     }
 
-    public void UpdateItemConstruct (string name, int mode) // mode 2 = Building; mode 3 = Plant
+    public void UpdateItemConstruct (string name, int mode, string text) // mode 2 = Building; mode 3 = Plant
     {
         //ActionContext.Instance.HideActionMenu();
         ReinitializeScreen();
-        GameSettings.Instance.hoverMode = mode;        
-        if (mode == 3) {/*PlantManager.UpdatePlantToBuild (name);*/} //Mode Plante //TO DO : A REMETTRE
-        else if (mode == 2) {Settlement.UpdateBlueprintToBuild (name);} //Mode batiment       
+        if (name.Contains("Enclosure") || name.Contains("Border") )
+        {
+            GameSettings.Instance.hoverMode = 9;
+            JunctionGrid.Instance.CreateJunctionPoints();
+            //Debug.Log("passe par hover9");
+            Settlement.UpdateBlueprintToBuild (name);
+        }
+        else 
+        {
+            GameSettings.Instance.hoverMode = mode;
+            if (mode == 3) {
+            JunctionGrid.Instance.RemoveAllPoints();
+            PlantManager.UpdatePlantToBuild (name);} //Mode Plante
+            else if (mode == 2) {
+            JunctionGrid.Instance.RemoveAllPoints();
+            Settlement.UpdateBlueprintToBuild (name);} //Mode batiment   
+        }   
+        Debug.LogError("Nouveau mode d'interaction : " + GameSettings.Instance.hoverMode) ;   
+            
         WhitedIcons();        
         UnityEngine.Transform plantTransform = subMenu.transform.Find("Icon_"+name); 
         if (plantTransform != null)
@@ -258,32 +302,35 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
                 plantImage.color = Color.yellow; // Par exemple, ici nous changeons la couleur en rouge
             }
         }
+        TileInteraction.Instance.previewTextBuildable = text;
 
     }
 
-    private void OnIconMouseEnter(string name, int mode, int available) 
+    private void OnIconMouseEnter(string name, int mode, int available, string text) 
     {
-        Debug.LogError("Passe dans oniconmouseenter et inside :" + inside);
-        if (available == 1){ InformationManager.Instance.SetLiveInfo(name); }
-        else if (available == 2){ InformationManager.Instance.SetLiveInfo(name + "<br> Atteignez niveau supérieur !"); }
+        if (available == 1 || available == 2){ InformationManager.Instance.SetLiveInfo(name + "<br>" + text); }
+        else if (available == 4){ InformationManager.Instance.SetLiveInfo(name + "<br> Atteignez niveau supérieur !"); }
         else if (available == 3){ InformationManager.Instance.SetLiveInfo(name + "<br> Vous ne possedez pas les ressources !"); }
     }
 
     private void OnIconMouseExit()
     {
+        InformationManager.Instance.EraseLiveInfo();
     }
-
 
 
     public void WhitedIcons()
     {
         foreach (UnityEngine.Transform child in subMenu.transform)
         {
-            GameObject plantObject = child.gameObject;
-            Image plantImage = plantObject.GetComponent<Image>();
-            if (plantImage != null)
+            Button childButton = child.gameObject.GetComponent<Button>();
+            if(childButton.interactable == true)
             {
-                plantImage.color = Color.white; // Modifier la couleur en blanc
+                Image childImage = child.gameObject.GetComponent<Image>();
+                if (childImage != null)
+                {
+                    childImage.color = Color.white; // Modifier la couleur en blanc
+                }
             }
         }
     }
@@ -295,22 +342,28 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
     public void BuyProperty(Vector2Int position)
     {
         int cost = 0;
-        if (position.x >= GameSettings.Instance.ownedgridSizeX && position.x < GameSettings.Instance.ownedgridSizeX + 10 && position.y >= 0 && position.y < GameSettings.Instance.ownedgridSizeY)
+        if (position.x >= GameSettings.Instance.ownedgridSizeX && position.x < (GameSettings.Instance.ownedgridSizeX + 10) && position.y >= 0 && position.y < GameSettings.Instance.ownedgridSizeY)
         {
             cost = 50 * 10 * GameSettings.Instance.ownedgridSizeY;
+            Debug.LogError("passe par condition pour achat x, cost : "+cost  + " /"+TurnContext.Instance.money);
             if (cost <= TurnContext.Instance.money)
             {
+                Debug.LogError("ancien ownedgridSizeX" + GameSettings.Instance.ownedgridSizeX);
                 GameSettings.Instance.ownedgridSizeX = GameSettings.Instance.ownedgridSizeX + 10;
+                Debug.LogError("nouveau ownedgridSizeX" + GameSettings.Instance.ownedgridSizeX);
                 TurnContext.Instance.money -= cost;
             }
         }
 
-        else if (position.x >= 0 && position.x < GameSettings.Instance.ownedgridSizeX && position.y >= GameSettings.Instance.ownedgridSizeY && position.y < GameSettings.Instance.ownedgridSizeY + 10)
+        else if (position.x >= 0 && position.x < GameSettings.Instance.ownedgridSizeX && position.y >= GameSettings.Instance.ownedgridSizeY && position.y < (GameSettings.Instance.ownedgridSizeY + 10))
         {
             cost = 50 * 10 * GameSettings.Instance.ownedgridSizeY;
+            Debug.LogError("passe par condition pour achat y, cost : "+cost + " /"+TurnContext.Instance.money);
             if (cost <= TurnContext.Instance.money)
             {
+                Debug.LogError("ancien ownedgridSizeY" + GameSettings.Instance.ownedgridSizeY);
                 GameSettings.Instance.ownedgridSizeY = GameSettings.Instance.ownedgridSizeY + 10;
+                Debug.LogError("nouveau ownedgridSizeY" + GameSettings.Instance.ownedgridSizeY);
                 TurnContext.Instance.money -= cost;
             }
         }
@@ -328,9 +381,10 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
     public void ReinitializeScreen()
     {
-        /*ActionContext.Instance.HideActionMenu();
+        ActionContext.Instance.HideActionMenu();
+        //TileGrid.Instance.previewmap.ClearAllTiles(); //A VOIR
+        TileInteraction.Instance.previewObject.SetActive(false); 
         TileGrid.Instance.previewmap.ClearAllTiles();
-        TileInteraction.Instance.previewObject.SetActive(false); */ //TO DO : A remettre
     }
 
 
@@ -338,17 +392,17 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
 
     public string UpdatePropertyPreview(Vector2Int position)
     {
-        return "UpdatePropertyPreview()";
-        /*Color color = new Color(1.0f, 0.0f, 0.0f, 0.2f);
+        /*return "UpdatePropertyPreview()";*/
+        Color color = new Color(1.0f, 0.0f, 0.0f, 0.2f);
         string reason = "Le terrain n'est pas en vente";
         if (position.x < GameSettings.Instance.ownedgridSizeX && position.y < GameSettings.Instance.ownedgridSizeY)
         {
             reason = "Vous possedez déjà ce terrain";
         }
         int cost = 0;
-        for (int x = 0; x < GameSettings.Instance.gridSizeX; x++)
+        for (int x = 0; x < GameSettings.Instance.gridSize; x++)
         {
-            for (int y = 0; y < GameSettings.Instance.gridSizeY; y++)
+            for (int y = 0; y < GameSettings.Instance.gridSize; y++)
             {
                 UnityEngine.Tilemaps.Tile tile = Resources.Load<UnityEngine.Tilemaps.TileBase>("Tiles/Basic") as UnityEngine.Tilemaps.Tile;
                 tile.color = color;
@@ -362,65 +416,71 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         }
 
         color = new Color(1.0f, 1.0f, 0.0f, 0.2f);
-        if (position.x >= GameSettings.Instance.ownedgridSizeX && position.x < GameSettings.Instance.ownedgridSizeX + 10 && position.y >= 0 && position.y < GameSettings.Instance.ownedgridSizeY)
-        { 
-            cost = 50 * 10 * GameSettings.Instance.ownedgridSizeY;
-            if (cost <= TurnContext.Instance.money)
-            {
-                color = new Color(0.235f, 0.702f, 0.443f, 0.2f);
-                reason = "Vous pouvez acheter le terrain pour : " + cost + " Terrarium";
-            }
-            else
-            {
-                color = new Color(0.8f, 1.0f, 0.2f, 0.2f);
-                reason = "Le terrain est en vente pour : " + cost + " Terrarium";
-            }
-        }
-        for (int x = GameSettings.Instance.ownedgridSizeX; x < GameSettings.Instance.ownedgridSizeX + 10; x++)
+        if (GameSettings.Instance.ownedgridSizeX < GameSettings.Instance.gridSize)
         {
-            for (int y = 0; y < GameSettings.Instance.ownedgridSizeY; y++)
+            if (position.x >= GameSettings.Instance.ownedgridSizeX && position.x < (GameSettings.Instance.ownedgridSizeX + 10) && position.y >= 0 && position.y < GameSettings.Instance.ownedgridSizeY)
+            { 
+                cost = 50 * 10 * GameSettings.Instance.ownedgridSizeY;
+                if (cost <= TurnContext.Instance.money)
+                {
+                    color = new Color(0.235f, 0.702f, 0.443f, 0.2f);
+                    reason = "Vous pouvez acheter le terrain pour : " + cost + " Terrarium";
+                }
+                else
+                {
+                    color = new Color(0.8f, 1.0f, 0.2f, 0.2f);
+                    reason = "Vous n'avez pas assez d'argent. <br>Le terrain est en vente pour : " + cost + " Terrarium";
+                }
+            }
+            for (int x = GameSettings.Instance.ownedgridSizeX; x < GameSettings.Instance.ownedgridSizeX + 10; x++)
             {
-                
-                UnityEngine.Tilemaps.Tile tile = Resources.Load<UnityEngine.Tilemaps.TileBase>("Tiles/Basic") as UnityEngine.Tilemaps.Tile;
-                tile.color = color;
-                if (tile != null) 
+                for (int y = 0; y < GameSettings.Instance.ownedgridSizeY; y++)
                 {
                     
-                    TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), null);
-                    TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), tile);
-                    Debug.LogError("passe par refresh");
-                    tile.color = new Color(1, 1, 1, 1);
-                }
-            }       
+                    UnityEngine.Tilemaps.Tile tile = Resources.Load<UnityEngine.Tilemaps.TileBase>("Tiles/Basic") as UnityEngine.Tilemaps.Tile;
+                    tile.color = color;
+                    if (tile != null) 
+                    {
+                        
+                        TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), null);
+                        TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), tile);
+                        //Debug.LogError("passe par refresh");
+                        tile.color = new Color(1, 1, 1, 1);
+                    }
+                }       
+            }
         }
         color = new Color(1.0f, 1.0f, 0.0f, 0.2f);
-        if (position.x >= 0 && position.x < GameSettings.Instance.ownedgridSizeX && position.y >= GameSettings.Instance.ownedgridSizeY && position.y < GameSettings.Instance.ownedgridSizeY + 10)
-        {
-            cost = 50 * 10 * GameSettings.Instance.ownedgridSizeX;
-            if (cost <= TurnContext.Instance.money)
+        if (GameSettings.Instance.ownedgridSizeY < GameSettings.Instance.gridSize)
+        {        
+            if (position.x >= 0 && position.x < GameSettings.Instance.ownedgridSizeX && position.y >= GameSettings.Instance.ownedgridSizeY && position.y < (GameSettings.Instance.ownedgridSizeY + 10))
             {
-                color = new Color(0.235f, 0.702f, 0.443f, 0.2f);
-                reason = "Vous pouvez acheter le terrain pour : " + cost + " Terrarium";
-            }
-            else
-            {
-                color = new Color(0.8f, 1.0f, 0.2f, 0.2f);
-                reason = "Le terrain est en vente pour : " + cost + " Terrarium";
-            }
-        }
-        for (int x = 0; x < GameSettings.Instance.ownedgridSizeX; x++)
-        {
-            for (int y = GameSettings.Instance.ownedgridSizeY; y < GameSettings.Instance.ownedgridSizeY + 10; y++)
-            {
-                UnityEngine.Tilemaps.Tile tile = Resources.Load<UnityEngine.Tilemaps.TileBase>("Tiles/Basic") as UnityEngine.Tilemaps.Tile;
-                tile.color = color;
-                if (tile != null) 
+                cost = 50 * 10 * GameSettings.Instance.ownedgridSizeX;
+                if (cost <= TurnContext.Instance.money)
                 {
-                    TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), null);
-                    TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), tile);
-                    tile.color = new Color(1, 1, 1, 1);
+                    color = new Color(0.235f, 0.702f, 0.443f, 0.2f);
+                    reason = "Vous pouvez acheter le terrain pour : " + cost + " Terrarium";
                 }
-            }       
+                else
+                {
+                    color = new Color(0.8f, 1.0f, 0.2f, 0.2f);
+                    reason = "Le terrain est en vente pour : " + cost + " Terrarium";
+                }
+            }
+            for (int x = 0; x < GameSettings.Instance.ownedgridSizeX; x++)
+            {
+                for (int y = GameSettings.Instance.ownedgridSizeY; y < GameSettings.Instance.ownedgridSizeY + 10; y++)
+                {
+                    UnityEngine.Tilemaps.Tile tile = Resources.Load<UnityEngine.Tilemaps.TileBase>("Tiles/Basic") as UnityEngine.Tilemaps.Tile;
+                    tile.color = color;
+                    if (tile != null) 
+                    {
+                        TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), null);
+                        TileGrid.Instance.previewmap.SetTile(new Vector3Int(x, y, 0), tile);
+                        tile.color = new Color(1, 1, 1, 1);
+                    }
+                }       
+            }
         }
         color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
         for (int x = 0; x < GameSettings.Instance.ownedgridSizeX; x++)
@@ -438,22 +498,28 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
             }       
         }
         return reason;
-        */
+        
     }
 
 
 
 
-    private void OnTileInfoButtonClick()
+    public void OnTileInfoButtonClick() //mode batiment cachés
     {
         onClickEvent.Invoke();
         GameSettings.Instance.hoverMode = 1;
         ReinitializeScreen();
+        //Settlement.Instance.UpdateSettlementVisual(); //TO DO : Remettre pour forcer reinit du batiment coupé ;)
     }
 
     private void OnWaterClick() //mode PlantInfo
     {
         ReinitializeScreen();
+    }
+    private void OnSettingsClick() //mode PlantInfo
+    {
+        ReinitializeScreen();
+        TurnContext.Instance.SettingsGameObject.SetActive(true);
     }
 
     private void OnPropertyClick() //mode Achat Terrain
@@ -468,6 +534,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         else
         {
             GameSettings.Instance.hoverMode = 1;
+            TileGrid.Instance.previewmap.ClearAllTiles();
         }
            
     }
@@ -491,7 +558,28 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         }   
     }
 
+    public void UpdatePreview()
+    {
+        TileGrid.Instance.previewmap.ClearAllTiles();
+        int maxX = 1; int maxY = 1;
+        if (GameSettings.Instance.DifficultyLevel == 0 ){maxX = GameSettings.Instance.gridSize; maxY = GameSettings.Instance.gridSize;}
+        else if (GameSettings.Instance.DifficultyLevel == 1 ){maxX = GameSettings.Instance.ownedgridSizeX; maxY = GameSettings.Instance.ownedgridSizeY;}
+        for (int i = 0; i < maxX; i++)
+        {
+            for (int j = 0; j < maxY; j++)
+            {
+                UnityEngine.Tilemaps.Tile covertile = Resources.Load<UnityEngine.Tilemaps.TileBase>("Tiles/Basic") as UnityEngine.Tilemaps.Tile;
+                //covertile.color = TileGrid.Instance.tiles[i,j].PreviewColor();
+                Color originalColor = TileGrid.Instance.tiles[i, j].PreviewColor();
+                Color transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.5f); // 50% de transparence
+                covertile.color = transparentColor;
+                //Debug.Log("tuile à jour couleur : "+ covertile.color);
+                TileGrid.Instance.previewmap.SetTile(new Vector3Int(i,j,0), covertile);
+            }
+        }   
 
+    }
+                
 
 
 
@@ -522,6 +610,8 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         if (waterViewButton != null){waterViewButton.onClick.AddListener(OnWaterButtonClick);}
         if (phViewButton == null){phViewButton = GetComponent<Button>();}
         if (phViewButton != null){phViewButton.onClick.AddListener(OnPhButtonClick);}
+        if (settingsButton == null){settingsButton = GetComponent<Button>();}
+        if (settingsButton != null){settingsButton.onClick.AddListener(OnSettingsClick);}
         if (propertyButton == null){propertyButton = GetComponent<Button>();}
         if (propertyButton != null){propertyButton.onClick.AddListener(OnPropertyClick);}
         if (inventoryButton == null){inventoryButton = GetComponent<Button>();}
@@ -537,7 +627,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         //TO DO : Cacher les batiments
     }
 
-    private void OnViewButtonClick() //rouge terre
+    private void OnViewButtonClick() //Rendre actif ou desactivée vue sol
     {
         ReinitializeScreen();
         onClickEvent.Invoke();
@@ -545,7 +635,8 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         {
             viewOptionMenu.SetActive(false);
             GameSettings.Instance.viewtileMode = 0;
-            UpdateAllTile();
+            //UpdateAllTile();
+            TileGrid.Instance.previewmap.ClearAllTiles();
         }
         else
         {
@@ -559,7 +650,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         onClickEvent.Invoke();
         GameSettings.Instance.viewtileMode = 1;
         Debug.Log("Mise à jour du visuel - Quantité d'argile");
-        UpdateAllTile();
+        UpdatePreview();
     }
 
     private void OnSandButtonClick() //moutarde
@@ -568,7 +659,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         onClickEvent.Invoke();
         GameSettings.Instance.viewtileMode = 2;
         Debug.Log("Mise à jour du visuel - Quantité de sable");
-        UpdateAllTile();
+        UpdatePreview();
     }
 
     private void OnSiltButtonClick() //vert
@@ -577,7 +668,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         onClickEvent.Invoke();
         GameSettings.Instance.viewtileMode = 3;
         Debug.Log("Mise à jour du visuel - Quantité de limon");
-        UpdateAllTile();
+        UpdatePreview();
     }
     private void OnWaterButtonClick() //bleu
     {
@@ -585,7 +676,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         onClickEvent.Invoke();
         GameSettings.Instance.viewtileMode = 4;
         Debug.Log("Mise à jour du visuel - Quantité d'eau");
-        UpdateAllTile();
+        UpdatePreview();
     }
     private void OnPhButtonClick() //gris
     {
@@ -593,7 +684,7 @@ public class MenuManager : MonoBehaviour//, IPointerEnterHandler, IPointerExitHa
         onClickEvent.Invoke();
         GameSettings.Instance.viewtileMode = 5;
         Debug.Log("Mise à jour du visuel - Valeur du pH");
-        UpdateAllTile();
+        UpdatePreview();
     }
 }
 

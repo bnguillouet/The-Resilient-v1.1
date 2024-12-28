@@ -1,0 +1,726 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!28 &-1656083271778605452
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AlteHaasGroteskRegular SDF Atlas
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 64
+  m_Height: 64
+  m_CompleteImageSize: 4096
+  m_MipsStripped: 0
+  m_TextureFormat: 1
+  m_MipCount: 1
+  m_IsReadable: 0
+  m_IsPreProcessed: 0
+  m_IgnoreMipmapLimit: 0
+  m_MipmapLimitGroupName: 
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 0
+  m_PlatformBlob: 
+  image data: 4096
+  _typelessdata: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002101410020810130e000000000000000000000d1214100800000000000000000810131009000000000000000000000d1215110b0000000000000000000000021b2d342d1b2530322b180f0000000000010f182b323430251108000000000311253033302612120d00000000000b182b32353128140a000000000000000000102d485448313e5052453b270f000000011a2c33455254503e3321080000031c2e3e5053503f4a322b18000000142831455254514135230a000000000000000014345474584c506c7262553b15000000142c47536272736e5a4e33150000112e49556d736f5d6a52452b0d000b284251657274705d503516000000000000000323436282795864837f826242280b000b28425374827f7c827b5a42280b00153555768a83877d8972523212001131516f848783887d5d43290c0000000000000b2431517086717383668571513111001131516f847e837c807d7051311100234363837b6574937858452b0d001f3f5f7e8168646f8c715131120000000000001437515e6276837185678670513111001c3c5c7c7b8671847a827051311200214161807e7086857c5c3c1800001535557672626a778d7051311100000000000b28415e7e827f7e7d7e817d5d41280b00224261817685657381787d5d3d1d00113151708588807376553515000012304a57788289897a5942280b000000000011315170866685718476615d50361400001e3e5e7e798479758b757f5f4020000c29435b7b87887355492e100000163656778b7b726965573d15000000000000113151718566837372866f5131230a000012325171857281847c8276563617000016486888747c7f5f3f1b0300001b3b5b7b83646177846545260600000000000b284262818083645879816242220200000c2a435677847a78817d5d4a301200001e3e5e7e888978573717000000113151708784808b7958381800000000000000153a54627164554c587454341400000000162f4a566f7777715d50361d0400001937515e7270574b30120000000c2943516c767771584c3214000000000000000e273a4251423c314854482d1000000000041d2f40505757514336230a0000000b243745525142301e050000000015293e5056575143321f0600000000000000000e15283128151a2d342d1a020000000000041327303737322a160a00000000000b182b323128140500000000000011253036373129160600000000000000000000000b110b00021014100200000000000000000a111718120c0000000000000000000d12110b00000000000000000008101618120c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f0000080c000000000000000000000008101312101a150800000000000000081014120d000300000000000000010508040000000000000000000000000310152f130e262c1b1609000000000000061125303332303a332108000000000511253034322b1822130000000000111f2528221400000000000000000000031b2e354f322b434c3b34220900000000061f313e505352505a4e3315000000051e303e50545245473f2b1300000011293d4548402c14000000000000000000102e49556f52455d6b5b4f3416000000011a314c586d7372707a5a3a1a00000018304b576d74726567593f22000000163d56646859401a010000000000000000153555768f72526b8b7c5b3b1b0000000f2c4758798a84898c8060401700000e2b455778898485848667472700000c294364838668472d0f0000000000000000123d5d7d8a7b5b758b8464441c030000143353748b736583828565442a0d00133353738a7465677c8e6e4e2e0000123151718a88745434140000000000000009253f66857a83647d7c896a492e1100001f3f5f7f7f5f55646b8b72523212001e3e5e7e80605270718c6c4c2c0000183b5b7b817c7f5f3f1d040000000000001030506f8a6c8768857385755535150000234363837a5a3a3e67877656361600214161817c5c72878686664626000e2b4567867772896a4a2f11000000000000163656768666827788697e7d5d3e120000204060807e5e434d6b8a73533313001e3e5e7e80605268686f51311100133252728b6b6787765636110000000000001e3e5e7e7e5e7a8782627686663f26090014345475897060637a8868462c0e00143453748b7261627886674727001d3d5d7d81615c7c81613e2508000000000026466685785771917a596d8c6f50301000102d485b7c8880828a7554341900000f2d475a7b8980828a765535150028486887785752728b6c503010000000000012325272574b53736b505272523f260900021b344f5b7379766d54482e100000011a334e5a7178766e55492f110013335272574b455272523e250800000000000d2b455245314653503e4552452b1200000009223445525956503f2e1b0200000008213344525856503f2f1c03000e2b455245302b4552452b1100000000000000182b322b192c3330252b322b18000000000009182b33393630251202000000000008172a32383630261203000000182b332b18182b332b180000000000000000000d120d000e1310080e130e00000000000000000e13191710090000000000000000000d12181610090000000000000e130e00000e130e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000091014130e000000000000000000000a1115120d0000000000000000000b1115120d000000000000000009102114100200000000000000000000000000000612263034322b180d0000000000000713273034322b180b00000000000a14283135322a1708000000000012253041342d1b0f000000000000000000000000061f313f50545245322a170000000007203240505452453128140000000a23364251545244302511000000192c3f506154483b270f000000000000000000000019314c586e74726652442a0d00000018324d586f7472655142280b00001936515d70747263503e2508000f2c46536c807562543b1c030000000000000000000e2c4658798a8387867152321800000e2b45587a8a8386846f513111000e2c465d7e8a8388826b5030100013335373878a878162492f11000000000000000000133353738a7464677e8364452b0d00133353738b746468817f5f3f2000133353738c71646b877958391900234363827a7f7087765535150000000000000000001f3f5f7f7e5f47506e8b72523212001e3e5e7e80604753737f5f3f2000183858778666445f7f7e5e3e1e00133353736f7f748a75543414000000000000000000234363837a5a3a3e67877656361600214161817c5c3c46535f52381a00183858788666465e7e7e5f3f1f001030506b7c8a8b7d5c482d10000000000000000000204060807e5e444e6b8b73533313001f3e5e7e7f5f43505d6b50301000183858788666465e7e7f5f3f1f001c3c5c7c8783716153391a02000000000000000000163555768a7160647b8768462c0e00143454758a7060637d8262422200183858788666465e7e7f5f3f1f00203f5f7f7d7f718061412101000000000000000000112f495c7c89808389745434190000102e485c7d898083887353331300183858798565465e7e7e5f3f1f00143453748989887e5d3e1e00000000000000000000031c354f5c7278766c54472d0f0000021b35505c7278766d53452b0e001030506d725232517071513111000f2d47537082775d513619000000000000000000000009223545525856503e2d1a010000000a233545525856503f2b1800000a26405052442a43515143290c00011a2d435162564a36240b00000000000000000000000009182b3238363025110100000000000a182b32383630251200000000132630322a172931312915000000011629314236301d0b0000000000000000000000000000000d12181610080000000000000000000d12181610090000000000000a10120d000c11110c0000000000000c122216120400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000311152520172c11252b2517020001152429130e111f251a15080000000512172e29292b221d0f000000000412162e29292919140700000000000000000000031c2e35453d374c30424b422f1700152e4149332c293d453a33210800051e30374e49494a423a270f0000041d30364e49494939322007000000000000000000112e49556557576c505c6b5c42250024415b6953463d56645a4e33150012304b576e69696a62543a1f060012304a566e696969594d321b020000000000000000153555768565788c6e6b8a6b4b2b002949698973534464847b5a3a1a00173757788e87898981624c311300163656778e8787887a59482e1000000000000000001636567686668387796c8c6c4c2c001f3f5f7f7e6969718c7051311100173757778669696b86785838180017375777866969748b75553515000000000000000016365676856f8774866c8c6c4c2c00133353738e88878b826241280b00173757778667676a857959391900173757778666475e7e80604020000000000000000016365676857b7e6787738c6c4c2c000e2c466685776988755535140000173757778e878589836e50301000173757788666465979846444240000000000000000163656768586735c7c7e8c6c4c2c0000193a5a7a81748868492f1100001737577787717279876842280b00173757778666415c7c826242220000000000000000163656778c866651718a8c6c4d2d00001030506f89807c5c3c1c030000173757778666656c8c7151311100173757778666656e887a593919000000000000000016365677937b5a4363828c6c4d2d00000a264060808f71513112000000173757788d848489816242280b00173757778d8484897f5f4d321400000000000000001030506c736b5031516f735333130000001331516f725243290c0000001030506d7474747262543a1500001030506d7474736f5f52372007000000000000000009253f5054503e28425153462c0e0000000b28415152452b16000000000a26405054545452443a270e00000a264050545453504037250c00000000000000000000122530343025152831332c190000000000142831322b18000000000000132630343434322a170e000000001326303434333026130c0000000000000000000000000910141008000b11130e000000000000000b11130e00000000000000000a10141414120d000000000000000a10141414100a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+  m_Name: AlteHaasGroteskRegular SDFCustom
+  m_EditorClassIdentifier: 
+  hashCode: 1486963807
+  material: {fileID: 8207905783646376670}
+  materialHashCode: -1896067297
+  m_Version: 1.1.0
+  m_SourceFontFileGUID: c4d0d72844a4af6488b4e1e95de4760c
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: c4d0d72844a4af6488b4e1e95de4760c, type: 3}
+  m_SourceFontFile: {fileID: 0}
+  m_AtlasPopulationMode: 0
+  m_FaceInfo:
+    m_FaceIndex: 0
+    m_FamilyName: Alte Haas Grotesk
+    m_StyleName: Regular
+    m_PointSize: 10
+    m_Scale: 1
+    m_UnitsPerEM: 1000
+    m_LineHeight: 11.93
+    m_AscentLine: 9.52
+    m_CapLine: 8
+    m_MeanLine: 6
+    m_Baseline: 0
+    m_DescentLine: -2.13
+    m_SuperscriptOffset: 9.52
+    m_SuperscriptSize: 0.5
+    m_SubscriptOffset: -2.13
+    m_SubscriptSize: 0.5
+    m_UnderlineOffset: -1.25
+    m_UnderlineThickness: 0.5
+    m_StrikethroughOffset: 2.4
+    m_StrikethroughThickness: 0.5
+    m_TabWidth: 3
+  m_GlyphTable:
+  - m_Index: 3
+    m_Metrics:
+      m_Width: 0
+      m_Height: 0
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 0
+      m_HorizontalAdvance: 2.78125
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 0
+      m_Height: 0
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 11
+    m_Metrics:
+      m_Width: 4.953125
+      m_Height: 8.9375
+      m_HorizontalBearingX: 0.296875
+      m_HorizontalBearingY: 7.953125
+      m_HorizontalAdvance: 5.5625
+    m_GlyphRect:
+      m_X: 47
+      m_Y: 36
+      m_Width: 6
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 12
+    m_Metrics:
+      m_Width: 8.15625
+      m_Height: 7.40625
+      m_HorizontalBearingX: 0.921875
+      m_HorizontalBearingY: 7.203125
+      m_HorizontalAdvance: 10
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 4
+      m_Width: 10
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 13
+    m_Metrics:
+      m_Width: 5.90625
+      m_Height: 7.265625
+      m_HorizontalBearingX: 0.34375
+      m_HorizontalBearingY: 7.140625
+      m_HorizontalAdvance: 6.296875
+    m_GlyphRect:
+      m_X: 36
+      m_Y: 4
+      m_Width: 7
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 39
+    m_Metrics:
+      m_Width: 7.125
+      m_Height: 7.46875
+      m_HorizontalBearingX: 0.421875
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 8
+    m_GlyphRect:
+      m_X: 21
+      m_Y: 4
+      m_Width: 8
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 40
+    m_Metrics:
+      m_Width: 6.40625
+      m_Height: 7.125
+      m_HorizontalBearingX: 0.046875
+      m_HorizontalBearingY: 7.140625
+      m_HorizontalAdvance: 6.484375
+    m_GlyphRect:
+      m_X: 19
+      m_Y: 52
+      m_Width: 7
+      m_Height: 8
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 41
+    m_Metrics:
+      m_Width: 5.609375
+      m_Height: 7.140625
+      m_HorizontalBearingX: 0.765625
+      m_HorizontalBearingY: 7.140625
+      m_HorizontalAdvance: 6.84375
+    m_GlyphRect:
+      m_X: 33
+      m_Y: 52
+      m_Width: 7
+      m_Height: 8
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 42
+    m_Metrics:
+      m_Width: 6.34375
+      m_Height: 7.484375
+      m_HorizontalBearingX: 0.4375
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 7.21875
+    m_GlyphRect:
+      m_X: 19
+      m_Y: 36
+      m_Width: 7
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 43
+    m_Metrics:
+      m_Width: 5.890625
+      m_Height: 7.140625
+      m_HorizontalBearingX: 0.765625
+      m_HorizontalBearingY: 7.140625
+      m_HorizontalAdvance: 7.046875
+    m_GlyphRect:
+      m_X: 47
+      m_Y: 52
+      m_Width: 7
+      m_Height: 8
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 46
+    m_Metrics:
+      m_Width: 6.53125
+      m_Height: 7.46875
+      m_HorizontalBearingX: 0.4375
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 7.59375
+    m_GlyphRect:
+      m_X: 36
+      m_Y: 20
+      m_Width: 7
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 52
+    m_Metrics:
+      m_Width: 7.109375
+      m_Height: 7.140625
+      m_HorizontalBearingX: 0.796875
+      m_HorizontalBearingY: 7.140625
+      m_HorizontalAdvance: 8.703125
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 52
+      m_Width: 8
+      m_Height: 8
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 54
+    m_Metrics:
+      m_Width: 6.828125
+      m_Height: 7.484375
+      m_HorizontalBearingX: 0.375
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 7.59375
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 36
+      m_Width: 8
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 56
+    m_Metrics:
+      m_Width: 6.828125
+      m_Height: 7.8125
+      m_HorizontalBearingX: 0.375
+      m_HorizontalBearingY: 7.328125
+      m_HorizontalAdvance: 7.59375
+    m_GlyphRect:
+      m_X: 21
+      m_Y: 20
+      m_Width: 8
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 58
+    m_Metrics:
+      m_Width: 5.703125
+      m_Height: 7.46875
+      m_HorizontalBearingX: 0.40625
+      m_HorizontalBearingY: 7.296875
+      m_HorizontalAdvance: 6.484375
+    m_GlyphRect:
+      m_X: 50
+      m_Y: 4
+      m_Width: 7
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 60
+    m_Metrics:
+      m_Width: 5.75
+      m_Height: 7.296875
+      m_HorizontalBearingX: 0.734375
+      m_HorizontalBearingY: 7.140625
+      m_HorizontalAdvance: 7.21875
+    m_GlyphRect:
+      m_X: 33
+      m_Y: 36
+      m_Width: 7
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 61
+    m_Metrics:
+      m_Width: 5.96875
+      m_Height: 7.140625
+      m_HorizontalBearingX: 0.078125
+      m_HorizontalBearingY: 7.125
+      m_HorizontalAdvance: 6.109375
+    m_GlyphRect:
+      m_X: 50
+      m_Y: 20
+      m_Width: 7
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 62
+    m_Metrics:
+      m_Width: 8.90625
+      m_Height: 7.140625
+      m_HorizontalBearingX: 0.1875
+      m_HorizontalBearingY: 7.125
+      m_HorizontalAdvance: 9.265625
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 20
+      m_Width: 10
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 176
+    m_Metrics:
+      m_Width: 0
+      m_Height: 0
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 0
+      m_HorizontalAdvance: 2.78125
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 0
+      m_Height: 0
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  m_CharacterTable:
+  - m_ElementType: 1
+    m_Unicode: 32
+    m_GlyphIndex: 3
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 36
+    m_GlyphIndex: 11
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 37
+    m_GlyphIndex: 12
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 38
+    m_GlyphIndex: 13
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 64
+    m_GlyphIndex: 39
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 65
+    m_GlyphIndex: 40
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 66
+    m_GlyphIndex: 41
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 67
+    m_GlyphIndex: 42
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 68
+    m_GlyphIndex: 43
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 71
+    m_GlyphIndex: 46
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 77
+    m_GlyphIndex: 52
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 79
+    m_GlyphIndex: 54
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 81
+    m_GlyphIndex: 56
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 83
+    m_GlyphIndex: 58
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 85
+    m_GlyphIndex: 60
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 86
+    m_GlyphIndex: 61
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 87
+    m_GlyphIndex: 62
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 160
+    m_GlyphIndex: 176
+    m_Scale: 1
+  m_AtlasTextures:
+  - {fileID: -1656083271778605452}
+  m_AtlasTextureIndex: 0
+  m_IsMultiAtlasTexturesEnabled: 0
+  m_ClearDynamicDataOnBuild: 0
+  m_UsedGlyphRects:
+  - m_X: 0
+    m_Y: 0
+    m_Width: 17
+    m_Height: 16
+  - m_X: 0
+    m_Y: 16
+    m_Width: 17
+    m_Height: 15
+  - m_X: 17
+    m_Y: 0
+    m_Width: 13
+    m_Height: 18
+  - m_X: 0
+    m_Y: 31
+    m_Width: 15
+    m_Height: 16
+  - m_X: 0
+    m_Y: 47
+    m_Width: 15
+    m_Height: 16
+  - m_X: 30
+    m_Y: 0
+    m_Width: 16
+    m_Height: 15
+  - m_X: 46
+    m_Y: 0
+    m_Width: 17
+    m_Height: 9
+  - m_X: 17
+    m_Y: 18
+    m_Width: 13
+    m_Height: 15
+  - m_X: 30
+    m_Y: 15
+    m_Width: 15
+    m_Height: 16
+  - m_X: 15
+    m_Y: 33
+    m_Width: 14
+    m_Height: 16
+  - m_X: 15
+    m_Y: 49
+    m_Width: 13
+    m_Height: 14
+  - m_X: 28
+    m_Y: 49
+    m_Width: 13
+    m_Height: 14
+  - m_X: 29
+    m_Y: 33
+    m_Width: 13
+    m_Height: 16
+  - m_X: 41
+    m_Y: 49
+    m_Width: 13
+    m_Height: 14
+  - m_X: 42
+    m_Y: 31
+    m_Width: 9
+    m_Height: 18
+  - m_X: 51
+    m_Y: 9
+    m_Width: 12
+    m_Height: 17
+  - m_X: 51
+    m_Y: 26
+    m_Width: 12
+    m_Height: 16
+  - m_X: 54
+    m_Y: 42
+    m_Width: 9
+    m_Height: 16
+  m_FreeGlyphRects:
+  - m_X: 15
+    m_Y: 31
+    m_Width: 2
+    m_Height: 2
+  - m_X: 30
+    m_Y: 31
+    m_Width: 12
+    m_Height: 2
+  - m_X: 46
+    m_Y: 9
+    m_Width: 5
+    m_Height: 22
+  - m_X: 45
+    m_Y: 15
+    m_Width: 6
+    m_Height: 16
+  - m_X: 54
+    m_Y: 58
+    m_Width: 9
+    m_Height: 5
+  - m_X: 51
+    m_Y: 42
+    m_Width: 3
+    m_Height: 7
+  m_fontInfo:
+    Name: 
+    PointSize: 0
+    Scale: 0
+    CharacterCount: 0
+    LineHeight: 0
+    Baseline: 0
+    Ascender: 0
+    CapHeight: 0
+    Descender: 0
+    CenterLine: 0
+    SuperscriptOffset: 0
+    SubscriptOffset: 0
+    SubSize: 0
+    Underline: 0
+    UnderlineThickness: 0
+    strikethrough: 0
+    strikethroughThickness: 0
+    TabWidth: 0
+    Padding: 0
+    AtlasWidth: 0
+    AtlasHeight: 0
+  atlas: {fileID: 0}
+  m_AtlasWidth: 64
+  m_AtlasHeight: 64
+  m_AtlasPadding: 3
+  m_AtlasRenderMode: 4165
+  m_glyphInfoList: []
+  m_KerningTable:
+    kerningPairs: []
+  m_FontFeatureTable:
+    m_GlyphPairAdjustmentRecords: []
+  fallbackFontAssets: []
+  m_FallbackFontAssetTable: []
+  m_CreationSettings:
+    sourceFontFileName: 
+    sourceFontFileGUID: c4d0d72844a4af6488b4e1e95de4760c
+    pointSizeSamplingMode: 1
+    pointSize: 10
+    padding: 3
+    packingMode: 4
+    atlasWidth: 64
+    atlasHeight: 64
+    characterSetSelectionMode: 0
+    characterSequence: 32 - 126, 160, 8203, 8230, 9633
+    referencedFontAssetGUID: 
+    referencedTextAssetGUID: 
+    fontStyle: 0
+    fontStyleModifier: 0
+    renderMode: 4165
+    includeFontFeatures: 0
+  m_FontWeightTable:
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  fontWeights: []
+  normalStyle: 0
+  normalSpacingOffset: 0
+  boldStyle: 0.75
+  boldSpacing: 7
+  italicStyle: 35
+  tabSize: 10
+--- !u!21 &8207905783646376670
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AlteHaasGroteskRegular SDF Material
+  m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 100, y: 100}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: -1656083271778605452}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OutlineTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Ambient: 0.5
+    - _Bevel: 0.5
+    - _BevelClamp: 0
+    - _BevelOffset: 0
+    - _BevelRoundness: 0
+    - _BevelWidth: 0
+    - _BumpFace: 0
+    - _BumpOutline: 0
+    - _ColorMask: 15
+    - _CullMode: 0
+    - _Diffuse: 0.5
+    - _FaceDilate: 0.12
+    - _FaceUVSpeedX: 0
+    - _FaceUVSpeedY: 0
+    - _GlowInner: 0.05
+    - _GlowOffset: 0
+    - _GlowOuter: 0.05
+    - _GlowPower: 0.75
+    - _GradientScale: 4
+    - _LightAngle: 3.1416
+    - _MaskSoftnessX: 0
+    - _MaskSoftnessY: 0
+    - _OutlineSoftness: 0.064
+    - _OutlineUVSpeedX: 0
+    - _OutlineUVSpeedY: 0
+    - _OutlineWidth: 0
+    - _PerspectiveFilter: 0.875
+    - _Reflectivity: 10
+    - _ScaleRatioA: 0.75
+    - _ScaleRatioB: 0.51937497
+    - _ScaleRatioC: 0.51937497
+    - _ScaleX: 1
+    - _ScaleY: 1
+    - _ShaderFlags: 0
+    - _Sharpness: 0
+    - _SpecularPower: 2
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TextureHeight: 64
+    - _TextureWidth: 64
+    - _UnderlayDilate: 0
+    - _UnderlayOffsetX: 0
+    - _UnderlayOffsetY: 0
+    - _UnderlaySoftness: 0
+    - _VertexOffsetX: 0
+    - _VertexOffsetY: 0
+    - _WeightBold: 0.75
+    - _WeightNormal: 0
+    m_Colors:
+    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
+    - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GlowColor: {r: 0, g: 0, b: 0, a: 0.5}
+    - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_BuildTextureStacks: []

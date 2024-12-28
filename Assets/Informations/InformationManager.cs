@@ -1,6 +1,9 @@
 using UnityEngine;
 using TMPro;
 using System.Text;
+using UnityEngine.UI;
+using System.Collections;  // Ajoute cette ligne
+
 
 public class InformationManager : MonoBehaviour
 {
@@ -8,6 +11,7 @@ public class InformationManager : MonoBehaviour
     public TextMeshProUGUI hoverText;
     public TextMeshProUGUI informationText;
     public GameObject informationGameObject;
+    public bool forceClose;
     //public TextMeshProUGUI informationText;
 
     private void Start()
@@ -18,9 +22,7 @@ public class InformationManager : MonoBehaviour
             Debug.LogError("Le composant TextMeshProUGUI n'est pas assigné.");
         }
 
-        // Appel de SetInfo pour mettre à jour le texte.
-        SetHoverInfo("Ligne 1\nLigne 2\nLigne 3\nLigne 4\nLigne 5");
-        SetHoverInfo("Ligne 6\nLigne 7\nLigne 8\nLigne 9\nLigne 10");
+        forceClose = false;
     }
 
     // Méthode pour mettre à jour le texte avec retour à la ligne
@@ -37,12 +39,33 @@ public class InformationManager : MonoBehaviour
     public void SetLiveInfo(string newText)
     {
         informationText.text = newText;
-        informationGameObject.SetActive(true);
+        forceClose = false;
+        //informationGameObject.SetActive(false);
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(informationText.GetComponent<RectTransform>());
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(informationGameObject.GetComponent<RectTransform>());
+        //informationGameObject.SetActive(true);
+        StartCoroutine(ShowAfterDelay(0.3f));
     }   
+        
+
+    private IEnumerator ShowAfterDelay(float delay)
+    {
+        if (!forceClose)
+        {
+            yield return new WaitForSeconds(delay);
+            informationGameObject.SetActive(false);  // Désactiver le GameObject
+            LayoutRebuilder.ForceRebuildLayoutImmediate(informationText.GetComponent<RectTransform>());
+            LayoutRebuilder.ForceRebuildLayoutImmediate(informationGameObject.GetComponent<RectTransform>());
+            Canvas.ForceUpdateCanvases();  // Force Unity à recalculer les Canvases immédiatement
+            informationGameObject.SetActive(true);
+        }
+
+    }
 
     public void EraseLiveInfo()
     {
         informationGameObject.SetActive(false);
+        forceClose = true;
     }   
 
     void Update()

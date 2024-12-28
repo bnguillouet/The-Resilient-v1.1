@@ -1,0 +1,764 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &-4286171768097683444
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AlteHaasGroteskBold SDF Material
+  m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Cube:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FaceTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 7848014982181796639}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OutlineTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Ambient: 0.5
+    - _Bevel: 0.5
+    - _BevelClamp: 0
+    - _BevelOffset: 0
+    - _BevelRoundness: 0
+    - _BevelWidth: 0
+    - _BumpFace: 0
+    - _BumpOutline: 0
+    - _ColorMask: 15
+    - _CullMode: 0
+    - _Diffuse: 0.5
+    - _FaceDilate: 0
+    - _FaceUVSpeedX: 0
+    - _FaceUVSpeedY: 0
+    - _GlowInner: 0.05
+    - _GlowOffset: 0
+    - _GlowOuter: 0.05
+    - _GlowPower: 0.75
+    - _GradientScale: 4
+    - _LightAngle: 3.1416
+    - _MaskSoftnessX: 0
+    - _MaskSoftnessY: 0
+    - _OutlineSoftness: 0
+    - _OutlineUVSpeedX: 0
+    - _OutlineUVSpeedY: 0
+    - _OutlineWidth: 0
+    - _PerspectiveFilter: 0.875
+    - _Reflectivity: 10
+    - _ScaleRatioA: 0.75
+    - _ScaleRatioB: 0.609375
+    - _ScaleRatioC: 0.609375
+    - _ScaleX: 1
+    - _ScaleY: 1
+    - _ShaderFlags: 0
+    - _Sharpness: 0
+    - _SpecularPower: 2
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _TextureHeight: 64
+    - _TextureWidth: 64
+    - _UnderlayDilate: 0
+    - _UnderlayOffsetX: 0
+    - _UnderlayOffsetY: 0
+    - _UnderlaySoftness: 0
+    - _VertexOffsetX: 0
+    - _VertexOffsetY: 0
+    - _WeightBold: 0.75
+    - _WeightNormal: 0
+    m_Colors:
+    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
+    - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
+    - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_BuildTextureStacks: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+  m_Name: AlteHaasGroteskBold SDF
+  m_EditorClassIdentifier: 
+  hashCode: -1590328000
+  material: {fileID: -4286171768097683444}
+  materialHashCode: 1185322336
+  m_Version: 1.1.0
+  m_SourceFontFileGUID: ad661c6530071bf439240c38731963de
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: ad661c6530071bf439240c38731963de, type: 3}
+  m_SourceFontFile: {fileID: 0}
+  m_AtlasPopulationMode: 0
+  m_FaceInfo:
+    m_FaceIndex: 0
+    m_FamilyName: Alte Haas Grotesk
+    m_StyleName: Bold
+    m_PointSize: 10
+    m_Scale: 1
+    m_UnitsPerEM: 1000
+    m_LineHeight: 12.21
+    m_AscentLine: 9.75
+    m_CapLine: 7
+    m_MeanLine: 6
+    m_Baseline: 0
+    m_DescentLine: -2.17
+    m_SuperscriptOffset: 9.75
+    m_SuperscriptSize: 0.5
+    m_SubscriptOffset: -2.17
+    m_SubscriptSize: 0.5
+    m_UnderlineOffset: -1.25
+    m_UnderlineThickness: 0.5
+    m_StrikethroughOffset: 2.4
+    m_StrikethroughThickness: 0.5
+    m_TabWidth: 3
+  m_GlyphTable:
+  - m_Index: 3
+    m_Metrics:
+      m_Width: 0
+      m_Height: 0
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 0
+      m_HorizontalAdvance: 2.78125
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 0
+      m_Height: 0
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 10
+    m_Metrics:
+      m_Width: 4.890625
+      m_Height: 7
+      m_HorizontalBearingX: 0.328125
+      m_HorizontalBearingY: 6.984375
+      m_HorizontalAdvance: 5.5625
+    m_GlyphRect:
+      m_X: 21
+      m_Y: 22
+      m_Width: 6
+      m_Height: 8
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 11
+    m_Metrics:
+      m_Width: 5.515625
+      m_Height: 9.078125
+      m_HorizontalBearingX: 0.046875
+      m_HorizontalBearingY: 8.0625
+      m_HorizontalAdvance: 5.5625
+    m_GlyphRect:
+      m_X: 21
+      m_Y: 4
+      m_Width: 6
+      m_Height: 11
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 12
+    m_Metrics:
+      m_Width: 8.515625
+      m_Height: 7.421875
+      m_HorizontalBearingX: 0.71875
+      m_HorizontalBearingY: 7.21875
+      m_HorizontalAdvance: 10
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 4
+      m_Width: 10
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 13
+    m_Metrics:
+      m_Width: 6.4375
+      m_Height: 7.34375
+      m_HorizontalBearingX: 0.328125
+      m_HorizontalBearingY: 7.203125
+      m_HorizontalAdvance: 6.84375
+    m_GlyphRect:
+      m_X: 19
+      m_Y: 37
+      m_Width: 7
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 18
+    m_Metrics:
+      m_Width: 5.046875
+      m_Height: 5.0625
+      m_HorizontalBearingX: 0.484375
+      m_HorizontalBearingY: 5.046875
+      m_HorizontalAdvance: 6
+    m_GlyphRect:
+      m_X: 19
+      m_Y: 53
+      m_Width: 6
+      m_Height: 7
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 23
+    m_Metrics:
+      m_Width: 5.140625
+      m_Height: 7.28125
+      m_HorizontalBearingX: 0.203125
+      m_HorizontalBearingY: 7.15625
+      m_HorizontalAdvance: 5.5625
+    m_GlyphRect:
+      m_X: 33
+      m_Y: 37
+      m_Width: 6
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 30
+    m_Metrics:
+      m_Width: 4.765625
+      m_Height: 6.984375
+      m_HorizontalBearingX: 0.390625
+      m_HorizontalBearingY: 6.984375
+      m_HorizontalAdvance: 5.5625
+    m_GlyphRect:
+      m_X: 32
+      m_Y: 53
+      m_Width: 6
+      m_Height: 7
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 39
+    m_Metrics:
+      m_Width: 7.296875
+      m_Height: 7.46875
+      m_HorizontalBearingX: 0.359375
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 8
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 35
+      m_Width: 8
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 49
+    m_Metrics:
+      m_Width: 4.71875
+      m_Height: 7.296875
+      m_HorizontalBearingX: 0.15625
+      m_HorizontalBearingY: 7.125
+      m_HorizontalAdvance: 5.5625
+    m_GlyphRect:
+      m_X: 55
+      m_Y: 30
+      m_Width: 5
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 52
+    m_Metrics:
+      m_Width: 7.671875
+      m_Height: 7.125
+      m_HorizontalBearingX: 0.703125
+      m_HorizontalBearingY: 7.125
+      m_HorizontalAdvance: 9.0625
+    m_GlyphRect:
+      m_X: 34
+      m_Y: 4
+      m_Width: 9
+      m_Height: 8
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 54
+    m_Metrics:
+      m_Width: 7.03125
+      m_Height: 7.484375
+      m_HorizontalBearingX: 0.375
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 7.78125
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 51
+      m_Width: 8
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 56
+    m_Metrics:
+      m_Width: 7.03125
+      m_Height: 7.890625
+      m_HorizontalBearingX: 0.375
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 7.78125
+    m_GlyphRect:
+      m_X: 34
+      m_Y: 19
+      m_Width: 8
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 62
+    m_Metrics:
+      m_Width: 9.25
+      m_Height: 7.109375
+      m_HorizontalBearingX: 0.0625
+      m_HorizontalBearingY: 7.125
+      m_HorizontalAdvance: 9.4375
+    m_GlyphRect:
+      m_X: 4
+      m_Y: 20
+      m_Width: 10
+      m_Height: 8
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 72
+    m_Metrics:
+      m_Width: 4.9375
+      m_Height: 5.4375
+      m_HorizontalBearingX: 0.3125
+      m_HorizontalBearingY: 5.296875
+      m_HorizontalAdvance: 5.734375
+    m_GlyphRect:
+      m_X: 45
+      m_Y: 53
+      m_Width: 6
+      m_Height: 7
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 83
+    m_Metrics:
+      m_Width: 1.421875
+      m_Height: 7.140625
+      m_HorizontalBearingX: 0.578125
+      m_HorizontalBearingY: 7.125
+      m_HorizontalAdvance: 2.578125
+    m_GlyphRect:
+      m_X: 58
+      m_Y: 46
+      m_Width: 2
+      m_Height: 9
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 98
+    m_Metrics:
+      m_Width: 3.375
+      m_Height: 9.109375
+      m_HorizontalBearingX: -0.0625
+      m_HorizontalBearingY: 7.3125
+      m_HorizontalAdvance: 3.328125
+    m_GlyphRect:
+      m_X: 55
+      m_Y: 13
+      m_Width: 5
+      m_Height: 10
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 99
+    m_Metrics:
+      m_Width: 1.078125
+      m_Height: 9.96875
+      m_HorizontalBearingX: 0.578125
+      m_HorizontalBearingY: 7.84375
+      m_HorizontalAdvance: 2.234375
+    m_GlyphRect:
+      m_X: 46
+      m_Y: 35
+      m_Width: 2
+      m_Height: 11
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 175
+    m_Metrics:
+      m_Width: 8.203125
+      m_Height: 1.515625
+      m_HorizontalBearingX: 0.890625
+      m_HorizontalBearingY: 1.53125
+      m_HorizontalAdvance: 10
+    m_GlyphRect:
+      m_X: 50
+      m_Y: 4
+      m_Width: 10
+      m_Height: 2
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 176
+    m_Metrics:
+      m_Width: 0
+      m_Height: 0
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 0
+      m_HorizontalAdvance: 2.78125
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 0
+      m_Height: 0
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  m_CharacterTable:
+  - m_ElementType: 1
+    m_Unicode: 32
+    m_GlyphIndex: 3
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 35
+    m_GlyphIndex: 10
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 36
+    m_GlyphIndex: 11
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 37
+    m_GlyphIndex: 12
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 38
+    m_GlyphIndex: 13
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 43
+    m_GlyphIndex: 18
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 48
+    m_GlyphIndex: 23
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 55
+    m_GlyphIndex: 30
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 64
+    m_GlyphIndex: 39
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 74
+    m_GlyphIndex: 49
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 77
+    m_GlyphIndex: 52
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 79
+    m_GlyphIndex: 54
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 81
+    m_GlyphIndex: 56
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 87
+    m_GlyphIndex: 62
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 97
+    m_GlyphIndex: 72
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 108
+    m_GlyphIndex: 83
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 123
+    m_GlyphIndex: 98
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 124
+    m_GlyphIndex: 99
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 160
+    m_GlyphIndex: 176
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 8230
+    m_GlyphIndex: 175
+    m_Scale: 1
+  m_AtlasTextures:
+  - {fileID: 7848014982181796639}
+  m_AtlasTextureIndex: 0
+  m_IsMultiAtlasTexturesEnabled: 0
+  m_ClearDynamicDataOnBuild: 0
+  m_UsedGlyphRects:
+  - m_X: 0
+    m_Y: 0
+    m_Width: 17
+    m_Height: 16
+  - m_X: 0
+    m_Y: 16
+    m_Width: 17
+    m_Height: 15
+  - m_X: 17
+    m_Y: 0
+    m_Width: 13
+    m_Height: 18
+  - m_X: 0
+    m_Y: 31
+    m_Width: 15
+    m_Height: 16
+  - m_X: 0
+    m_Y: 47
+    m_Width: 15
+    m_Height: 16
+  - m_X: 30
+    m_Y: 0
+    m_Width: 16
+    m_Height: 15
+  - m_X: 46
+    m_Y: 0
+    m_Width: 17
+    m_Height: 9
+  - m_X: 17
+    m_Y: 18
+    m_Width: 13
+    m_Height: 15
+  - m_X: 30
+    m_Y: 15
+    m_Width: 15
+    m_Height: 16
+  - m_X: 15
+    m_Y: 33
+    m_Width: 14
+    m_Height: 16
+  - m_X: 15
+    m_Y: 49
+    m_Width: 13
+    m_Height: 14
+  - m_X: 28
+    m_Y: 49
+    m_Width: 13
+    m_Height: 14
+  - m_X: 29
+    m_Y: 33
+    m_Width: 13
+    m_Height: 16
+  - m_X: 41
+    m_Y: 49
+    m_Width: 13
+    m_Height: 14
+  - m_X: 42
+    m_Y: 31
+    m_Width: 9
+    m_Height: 18
+  - m_X: 51
+    m_Y: 9
+    m_Width: 12
+    m_Height: 17
+  - m_X: 51
+    m_Y: 26
+    m_Width: 12
+    m_Height: 16
+  - m_X: 54
+    m_Y: 42
+    m_Width: 9
+    m_Height: 16
+  m_FreeGlyphRects:
+  - m_X: 15
+    m_Y: 31
+    m_Width: 2
+    m_Height: 2
+  - m_X: 30
+    m_Y: 31
+    m_Width: 12
+    m_Height: 2
+  - m_X: 46
+    m_Y: 9
+    m_Width: 5
+    m_Height: 22
+  - m_X: 45
+    m_Y: 15
+    m_Width: 6
+    m_Height: 16
+  - m_X: 54
+    m_Y: 58
+    m_Width: 9
+    m_Height: 5
+  - m_X: 51
+    m_Y: 42
+    m_Width: 3
+    m_Height: 7
+  m_fontInfo:
+    Name: 
+    PointSize: 0
+    Scale: 0
+    CharacterCount: 0
+    LineHeight: 0
+    Baseline: 0
+    Ascender: 0
+    CapHeight: 0
+    Descender: 0
+    CenterLine: 0
+    SuperscriptOffset: 0
+    SubscriptOffset: 0
+    SubSize: 0
+    Underline: 0
+    UnderlineThickness: 0
+    strikethrough: 0
+    strikethroughThickness: 0
+    TabWidth: 0
+    Padding: 0
+    AtlasWidth: 0
+    AtlasHeight: 0
+  atlas: {fileID: 0}
+  m_AtlasWidth: 64
+  m_AtlasHeight: 64
+  m_AtlasPadding: 3
+  m_AtlasRenderMode: 4165
+  m_glyphInfoList: []
+  m_KerningTable:
+    kerningPairs: []
+  m_FontFeatureTable:
+    m_GlyphPairAdjustmentRecords: []
+  fallbackFontAssets: []
+  m_FallbackFontAssetTable: []
+  m_CreationSettings:
+    sourceFontFileName: 
+    sourceFontFileGUID: ad661c6530071bf439240c38731963de
+    pointSizeSamplingMode: 1
+    pointSize: 10
+    padding: 3
+    packingMode: 4
+    atlasWidth: 64
+    atlasHeight: 64
+    characterSetSelectionMode: 0
+    characterSequence: 32 - 126, 160, 8203, 8230, 9633
+    referencedFontAssetGUID: 
+    referencedTextAssetGUID: 
+    fontStyle: 0
+    fontStyleModifier: 0
+    renderMode: 4165
+    includeFontFeatures: 0
+  m_FontWeightTable:
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  fontWeights: []
+  normalStyle: 0
+  normalSpacingOffset: 0
+  boldStyle: 0.75
+  boldSpacing: 7
+  italicStyle: 35
+  tabSize: 10
+--- !u!28 &7848014982181796639
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AlteHaasGroteskBold SDF Atlas
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 2
+  m_Width: 64
+  m_Height: 64
+  m_CompleteImageSize: 4096
+  m_MipsStripped: 0
+  m_TextureFormat: 1
+  m_MipCount: 1
+  m_IsReadable: 0
+  m_IsPreProcessed: 0
+  m_IgnoreMipmapLimit: 0
+  m_MipmapLimitGroupName: 
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 0
+  m_PlatformBlob: 
+  image data: 4096
+  _typelessdata: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c12120d000e1310090000000000000000000200000000000000000714192f141730192c2f1b1609000000000e132f1d222827221e2f120d00000000000000162931322b182b333025120000000000000a102215110300000000072032394f34374f394a4f3b3422090000192c334f3d3f48473f3e4f322b1800000000000c29435152453d4553503f26130000000513263042352e1c0c00000014324d596f54576f59656f5b4f3416000e2c46536f5d596867595d6f52452b0d000000001231517072525765726d5040260a00051e30405062554931291600001939597a9075788f7a70917c5b3b1b0013335373927d688686677d917252321200000000133353738767658487876d5030100012304b576d8275675143290c0019395979947582a28471917c5c3c1c001131517080785c7d7d5c78806f5131110000000b24374660807b718d6e887656361600173757778ba2958570513111001939597995768d8a8e73937c5c3c1c000c2943516157505c5c5057605142280b0000021b37515e677087718d738b74543414002a4a69888582788e7f5e3f1f0019395979997e9575907d9b7c5c3c1c00001529314137353c3c353741312815000000102e485e7e877a7c7e7a867d5d482e10001939597974807b8f806040200019395979998b8969858a9b7c5c3c1c0000000c112117181d1c171721110b00000000153555758b738e718772665d50361b020012325272828d9988735233130019395979999e7e5e7b9a9b7c5c3c1c0000000000000000000000000000000000000017375676876c8e707981624836230a0000264666858e897a6d55492f11001939597a939474537091937c5b3c1c0000000000000000000d1c21291712050000001030506d86878364668674543414000000294968888580788875553616001131506e747367475373747051311100000000000000000d2639414937301e05000009263f506d7364565272725232120000001939597a909093856f503010000a2741505453462c4653545142280b00000000000000021b39536169574b301200000012263f5053463c445252452b0d00000014324d5972847966503f2509000014273134332c192c33343128140000000000000000102e486180887757371700000000122530332c192a32322b1800000000072032455270584c302512000000000a1114130e000e1314110b0000000000000000001535547594817252321200000000000910130e000d12120d00000000000007182b405040321f090000000000000000000000000000000000000000000000000014355575957757452b0d00000000000000000000000000000000000000000000132630261306000000000000000008101413101c110b0000000000000000000b28425677967757371800000000000512172f221d162f221d0e00000000000000000a100a0000000000000000061125303333303c3128140000000000000000113151708b897051311100000000051e30374f423a364f423a270e0000000000000000000000000000000000061f313e505353505c5141280b000000000000001030506c8090745434140000000012304b576f6254566f62543a1d000000000000000c000a0600000000000019314c576d73726f7c6e5131110000000000000008253e5575957757371e050000001737577890816277918162421a01000000000b112c132a2516020000000f2c4657798b93928c89725232120000000000000000113555759579584b30120000001540607f9f8a6b7e9e8b6b472d0f0000001528314c334a422f16000000133353738e86768a9b8b6f5030100000000000000000123252718d8d7757371700000b284268888c9273868b937454341400000b2842516c536a5c42150000001f3f5f7f93745b7c7d987858381800000000000000000d2a4453747a725232120000113151718f7d8e7b8e7c8f7c5d3d120000113151708c738a6a42280b0000234363838e6e4f5b75957c5c3c1c000000000000000000172c46535a52452b0d0000193959799577868a92738885653f2509001030506f8d738e705131110000204060809273525979987959391900000000000000000001192c333a322b18000000214161818e6c7e9d8a6a808d6c50301000214161818f8c908969491b02001535557591847275898c6f51311100000000000000000000010f131a120d000000002a4a6a888566769382627a9377563616001c395364847a857858482e1000102e485b7c8e92948b785742280b0000000000000000000000000000000000000000133353737152697470516c736f50311100193959798e8f918d7454341500021b344f5b7278766e574b301400000000000000000000000b1114110b00000000000f2c465352444753514350545041270a0014324d5b7c847d8161482e100000092234445258565040301e0500000000000000000006142831343128150700000000192c33322a2d34312930343127140000072036567786788364441b0200000009172a32383730261305000000000000000000061f314151545142322007000000000f13120d0f14110c1014110a00000000112f4a56665864563c1f0000000000000d121817100a000000000000000000000014314c586f7470594d32140000000000000000000000000000000000000000041d2f364638443c29100000000000000000000000000000000000000000000000183858788d948e7a593919000000000000000d121410090000000000000000000411162618241f1000000000000000000000000000000000000b11120d0000002949688888768b87684929000000000310182b32343026120800000000000000000000000000000000000000000000000000000000000000142831322a170000214161807b66868a6b4b2b000000031b2e35455254503f3422080000000000091014110b000000000000000000000d12110b00000000000b28425152442a0d001c3953615a66868a6b4b2b000000182e49556672736f5b4f341300000002122530343128151f1a0c000000000c182b32312814090000001131516f72523212000d2639414666868b6b4b2b00000d2b455576868784877c5b40260a00021b2e3f505351424f3f37250c00001529314552514134220900001d3d5c7d8464442400000d1c264666868b6b4b2b0000123252728a7e827d817f6e50301000102e48546d7370626e5f52371a000c2943516772705b4f341600001d3d5d7d8364442400000006264666848a6b4b2b00001f3f5f7f818d7d8685847453341400153454758a928e81907f5f3f1f001131517086928e7c5b43290c001d3d5d7d836444240000000012325272735333130000244464837c8e7074867680614121002343638389737e9d876752371a001f3f5f7f8e75808d70513111001d3d5d7d84644424000000000d2a445253452b0e00002040607f7f85848190768363432300224262818a73878d8d7050311100274767878565749379583818001d3d5d7d846444240000000000172a32332b18000000143353748a757f7f7b857a5a3a1a0012325272899391747e715131110029496989836372917a5a3a1a001d3d5d7d846444240000000000000d12130e000000000f2c475879898280877f604e3315000d2b455d7c8e8a85655143290c00274767878565749379583818001d3d5d7d846444240000000000000000000000000000011a314c586f777772605238210800001847678683798f7050301500001f3f5f7f8d74808e71513212001d3d5d7d8464442400000000000000000f0b0000000000061f3140505757524438250d0000001b3b5b7c8e8c836440260a00001131517086938e7c5c432a0c001d3d5d7d8464442400000000000a171c2e2a1c0800000000061327303737322a170d0000000016344f5b737364563c130000000c2943516773705c4f351600001a3a5a7b80604021000000000a23353c4e48351c0000000000000a111717120d000000000000092234465353463c28100000000016293146535142352209000016334e5a6053391b000000001735505c6e62482a0000000000000000000000000000000000000009192c33332c19100000000000000c192c33312814090000000821333a4039260d000000001c3c5c7c8e6e4e2e000000000000081014130e000000000000000000000e13130f010000000000000000000f13110b00000000000008161a211b0d00000000001d3d5d7d936f4f2f000000000511253034332c190f010000000000000000000000000000000000000000000000000000000000000000000000000000000000001d3d5d7d936f4f2f000000051e313e50545346342d1a0100000000000000000100000000000000000e1d222b261703000000000000000d12130e0000000000001d3d5d7d8f6f4f2f00000019314b576d74736754472d1300000000000d1b20211b0d00000000000e273a424b433017000000000009172a32322b1816110400001d3d5d7d8f6f4f2f00000f2c4657798b949386745440260a0000000d2538404139260d000000001d3a54626b5d4315000000000922344452524550362f1d04001d3d5d7d8f6f4f2f0000133353738e8676798b886d50301000000c13385260605339130c000002224262818a6b42280b00000016344f5b72726970694a2f11001d3d5d7d906f4f2f00001f3f5f7f9374565b7b9879583818000c253840607f80604038250c00001d3c5c7c8f715131110000001b3b5b7c8f89888f775636160011315170735333130000234363838e6e475575957c5c3c1c001a38525f6d81826d5f52381a000013335373927858381c03000025456584896a7b9475553515000b28425153462c0f0000204060809273535a7a9879593919001f3f5f7f90a1a2907f5f3f2000031c2f4666858464492f150000173756778a888794755535150000152831332c1900000015355576918472758a8c6f513111001030506d708182706f50301000112f49555a758f765542280b00163656767c6e7d94755435150000000b11130f00000000112e495a7b8d92948b785741280b0009263f5060808061503f260900153555767a7b86896f51311100163656768e868a8b6f5131110000000000000000000000031c334e5a7178766e574b3014000000122630506d6e50302612000023426282929190927454341400112f4a567178776f5142280b000000000000000000000000082133445258565040301e050000000009253f50503f26090000001d3b54626f6f6f6f54482d1000041d2f4452585751422815000000000000000000000000000008172a32383630261305000000000000122530302612000000000f273b424f4f4f4f342d1a02000004172a32383731281500000000000000000000000000000000000d121816100a000000000000000000091010090000000000000f1d232f2f2f2f14100200000000000d121817110b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 

@@ -24,9 +24,12 @@ public class Item
     public int Stock1Year { get; set; }
     public int Stock2Months { get; set; }
     public int Stock1Month { get; set; }
+    public int InventoryX { get; set; }
+    public int InventoryY { get; set; }
+    
 
     // Constructeur de la classe Item
-    public Item(string name, string category, string type, string subType, string stockBuilding, string origin, int conservation, int bonus, int supply, float price, int stock, int stock10Years, int stock1Year, int stock2Months, int stock1Month)
+    public Item(string name, string category, string type, string subType, string stockBuilding, string origin, int conservation, int bonus, int supply, float price, int stock, int stock10Years, int stock1Year, int stock2Months, int stock1Month, int inventoryX, int inventoryY)
     {
         Name = name;
         Category = category;
@@ -43,6 +46,8 @@ public class Item
         Stock1Year = stock1Year;
         Stock2Months = stock2Months;
         Stock1Month = stock1Month;
+        InventoryX = inventoryX;
+        InventoryY = inventoryY;
     }
 
         public void AddToInventory(int quantity)

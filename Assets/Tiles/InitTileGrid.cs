@@ -33,18 +33,15 @@ public class InitTileGrid
         } 
 
         //DEFINITION NOMBRE ARBRE BASE
-        int totalTiles = (int)Math.Pow(GameSettings.Instance.gridSize,2);// * GameSettings.Instance.gridSize;
+        int totalTiles = (int)Math.Pow(GameSettings.Instance.gridSize,2);
         int totalTree = totalTiles/200;
         //int totalTree =  2;
 
         //DEBUT INITIALISATION DES BUILDINGS 
         Debug.Log ("Debut creation des batiments de base");
         
+        List <string> buildingName = new List<string> {/*"House_2",*/ "Decor_1", "Decor_2","Decor_3","House_3","House_4","Decor_4", "Pond_1"}; //TO DO : Remplacer par une maison random et des décor random
         
-        
-        /*
-        
-        List <string> buildingName = new List<string> {"House_2", "Decor_1", "Decor_2","Decor_3","Decor_4", "Pond_1"}; //TO DO : Remplacer par une maison random et des décor random
         int temphoverMode = GameSettings.Instance.hoverMode;
         GameSettings.Instance.hoverMode = 2;
         foreach (string building in buildingName)
@@ -53,9 +50,9 @@ public class InitTileGrid
             bool built = false;
             while (!built)
             {
-                int random_x = UnityEngine.Random.Range((int)GameSettings.Instance.gridSizeX/3, (int)GameSettings.Instance.gridSizeX);
-                int random_y = UnityEngine.Random.Range((int)GameSettings.Instance.gridSizeX/3, (int)GameSettings.Instance.gridSizeZ);
-                if (building == "House_2")
+                int random_x = UnityEngine.Random.Range((int)GameSettings.Instance.gridSize/3, (int)GameSettings.Instance.gridSize);
+                int random_y = UnityEngine.Random.Range((int)GameSettings.Instance.gridSize/3, (int)GameSettings.Instance.gridSize);
+                if (building == "House_3")
                 {
                 random_x = UnityEngine.Random.Range(4, 12); //(int)GameSettings.Instance.gridSizeZ/3
                 random_y = UnityEngine.Random.Range(4, 12); //(int)GameSettings.Instance.gridSizeZ/3
@@ -66,59 +63,89 @@ public class InitTileGrid
                 {
                     for (int j = random_y; j < random_y + Settlement.selectedBlueprint.size.y; j++)
                     {
-                        if (TileGrid.Instance.CanBuildBuilding(i, j, 1, false) != "ok"){canbuild = false;}
+                        if (TileGrid.Instance.CanBuildBuilding(new Vector2Int(i,j), 1, false) != "ok"){canbuild = false;}
                     }
                 }
                 if (canbuild)
                 {
                     built = true;
-                    TileGrid.Instance.Build(random_x, random_y);
+                    TileGrid.Instance.Build(new Vector2Int(random_x, random_y));
                 }
             }
         }
         foreach (Building building in Settlement.buildings)
         {
             building.Construction();
-            building.state = 0;
+            /*if (building.buildingName != "House_3")
+            {*/
+                building.state = 0;
+            /*}
+            else
+            {
+                building.state = 2; // House_3 est abandonné
+            } */          
             building.UpdateBuildingObject();
         }
         GameSettings.Instance.hoverMode = temphoverMode;
+        House house = Settlement.Instance.BestHouseToInstall();
+        if (Tribe.members[0] is Human man)
+        {
+            man.InstallInHouse(house);
+        }
+        if (Tribe.members[1] is Human woman)
+        {
+            woman.InstallInHouse(house);
+        }
         Debug.Log ("Fin creation des batiments de base");
         //FIN INITIALISATION DES BUILDINGS       
         
         //DEBUT INITIALISATION DES ARBRES 
         Debug.Log ("Debut creation des arbres de base");
-        PlantManager.selectedPlant = PlantManager.plantInfos[4]; // TO DO : Changer des arbres random
+        PlantManager.selectedPlant = PlantManager.plantInfos[0]; // TO DO : Changer des arbres random
         //Debug.LogError("Nom anglais de l arbre selectionné :" + PlantManager.selectedPlant.GetEnglishName());
         // Planter 15 arbres par défault
         for (int x = 0; x <= totalTree; x++)
         {
             string canPlant = "non construit";
-            int randomX = UnityEngine.Random.Range(0, GameSettings.Instance.gridSizeX);
-            int randomY = UnityEngine.Random.Range(0, GameSettings.Instance.gridSizeZ);
-            int randomtree = UnityEngine.Random.Range(4, 5); //TO DO : Changer pour liste 0,7 pour différent arbres a la base du jeu
-            //int randomtree = UnityEngine.Random.Range(0, 7);
+            int randomX = UnityEngine.Random.Range(0, GameSettings.Instance.gridSize);
+            int randomY = UnityEngine.Random.Range(0, GameSettings.Instance.gridSize);
+            //int randomtree = UnityEngine.Random.Range(4, 5); //TO DO : Changer pour liste 0,7 pour différent arbres a la base du jeu
+            int randomtree = UnityEngine.Random.Range(0, 3);
             //---------------------------------------
             while (canPlant != "ok")
             {
-                randomX = UnityEngine.Random.Range(0, GameSettings.Instance.gridSizeX);
-                randomY = UnityEngine.Random.Range(20, GameSettings.Instance.gridSizeZ); //(int)GameSettings.Instance.gridSizeZ/2
-                randomtree = UnityEngine.Random.Range(4, 5);
-                canPlant = TileGrid.Instance.CanBuildBuilding(randomX, randomY, (int)PlantManager.plantInfos[randomtree].MaxSize/2, false);
+                randomX = UnityEngine.Random.Range(0, GameSettings.Instance.gridSize);
+                randomY = UnityEngine.Random.Range(20, GameSettings.Instance.gridSize); //(int)GameSettings.Instance.gridSizeZ/2
+                randomtree = UnityEngine.Random.Range(0, 3);
+                canPlant = TileGrid.Instance.CanBuildBuilding(new Vector2Int(randomX, randomY), (int)PlantManager.plantInfos[randomtree].MaxSize/2, false);
             }
             PlantManager.selectedPlant = PlantManager.plantInfos[randomtree];
             //Debug.LogError("Nom anglais de l arbre selectionné :" + PlantManager.selectedPlant.GetEnglishName());
             PlantManager.ToPlant(new Vector2Int(randomX, randomY), null);
-            string nomanglais = PlantManager.Instance.OnTileClick(new Vector3Int(randomX, randomY, 0)).info.englishName;
+            string nomanglais = PlantManager.Instance.OnTileClick(new Vector2Int(randomX, randomY)).info.englishName;
             //Debug.LogError("Nom anglais une fois l.arbre créé :" + nomanglais);
-            PlantManager.Instance.OnTileClick(new Vector3Int(randomX, randomY, 0)).ChangeVisual();
+            /*PlantManager.Instance.OnTileClick(new Vector3Int(randomX, randomY, 0)).ChangeVisual();*/
+            PlantManager.Instance.OnTileClick(new Vector2Int(randomX, randomY)).UpdatePlantObject();
 
         }
-        PlantManager.ListPlants();
+        //PlantManager.ListPlants();
         Debug.Log ("Fin creation des arbres de base");
         // FIN INITIALISATION DES ARBRES 
-
-        */
+        switch (GameSettings.Instance.DifficultyLevel) //TO DO : A changer pour valeur réelle
+        {
+            case 2:
+                TurnContext.Instance.money = 100;
+                break;
+            case 1: 
+                TurnContext.Instance.money = 5000;
+                break;
+            case 0: 
+                TurnContext.Instance.money = 20000;
+                break;
+            case 99: 
+                TurnContext.Instance.money = 100000;
+                break;
+        }
     }
     
     private void AddWaterBasedOnFrequency() // Fonction pour ajouter de l'eau en fonction de waterFrequency

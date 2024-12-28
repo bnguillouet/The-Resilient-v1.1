@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public enum TileType { Water, Soil, Building }
 
@@ -59,6 +60,22 @@ public class Tile// : MonoBehaviour
         InitializeVegetationObjects();
     }
 
+    public void DestroyTile()
+    {
+    // Vérifiez et détruisez l'objet de végétation avant de supprimer la tuile
+        if (vegetationFrontObject != null)
+        {
+            Object.Destroy(vegetationFrontObject);
+            vegetationFrontObject = null; // Réinitialisation de la référence
+        }
+        
+        if (vegetationBackObject != null)
+        {
+            Object.Destroy(vegetationBackObject);
+            vegetationBackObject = null; // Réinitialisation de la référence
+        }
+    }
+
     // Méthode pour ajuster les valeurs des attributs de la tuile en fonction de son type et des paramètres du jeu
     public void RandomizeAttributes()
     {
@@ -91,7 +108,17 @@ public class Tile// : MonoBehaviour
     {
         vegetationFrontObject = new GameObject("Tile_Front_" + position.x + "_" + position.y);
         vegetationFront = vegetationFrontObject.AddComponent<ImageObject>();
-        vegetationFront.Initialize (null, /*null,*/ this, "Plants/Vegetation/Grass2", 8, position, new Vector2Int(-1,-1), "", -1, Color.white, 100); 
+        vegetationFront.Initialize (null, null, this, "Plants/Vegetation/Grass2_1", 8, position, new Vector2Int(-1,-1), "", -1, Color.white, 100);
+        vegetationFront.MakeInvisible();  
+        
+        vegetationBackObject = new GameObject("Tile_Back_" + position.x + "_" + position.y);
+        vegetationBack = vegetationBackObject.AddComponent<ImageObject>();
+        vegetationBack.Initialize (null, null, this, "Plants/Vegetation/Grass2_1", 2, position, new Vector2Int(-1,-1), "", -1, Color.white, 100); 
+    }
+
+    public Vector2Int InsidePosition()
+    {
+        return position;
     }
     /*******************************************************/
     /********** FIN INITIALISATION DE LA TILE **************/
@@ -104,7 +131,35 @@ public class Tile// : MonoBehaviour
     public virtual void UpdateVegetationObject(string vegetationPath)
     {
         //vegetationFront.ReLoadImage(vegetationPath , "", 100, hoverVisual);  // Changer la position ExtInput pour le batiment ds lequel est placé la structure   
-        vegetationFront.ReLoadImage(vegetationPath , "", 100, (hoverVisual || position.x >= GameSettings.Instance.ownedgridSizeX || position.y >= GameSettings.Instance.ownedgridSizeY)   ); 
+        vegetationBack.ReLoadImage(vegetationPath , "", 100, (hoverVisual || position.x >= GameSettings.Instance.ownedgridSizeX || position.y >= GameSettings.Instance.ownedgridSizeY)   ); 
+    }
+    public virtual void UpdateFrontVegetationObject(string vegetationPath)
+    {
+        if (vegetationPath == "Invisible")
+        {
+            vegetationFront.MakeInvisible(); 
+        }
+        else
+        {
+            //vegetationFront.MakeVisible();  
+            vegetationFront.ReLoadImage(vegetationPath , "", 100, (hoverVisual || position.x >= GameSettings.Instance.ownedgridSizeX || position.y >= GameSettings.Instance.ownedgridSizeY)   ); 
+        }
+    }
+
+    public virtual void UpdateInsideObject()
+    {
+        if (Settlement.Instance.OnTileClickBool(position))
+        {
+            Building Buildinginside = Settlement.Instance.OnTileClick(position);
+            /*Debug.LogError ("Il y a bien un batiment sur la tuile");*/
+            Vector2Int Buildinginsideposition = new Vector2Int(Buildinginside.position.x+((int)(Buildinginside.size.x/2)),Buildinginside.position.y+((int)(Buildinginside.size.y/2)));
+
+            vegetationBack.ReOrderImage(Buildinginsideposition, true, 0); 
+        }
+        else
+        {
+            vegetationBack.ReOrderImage(new Vector2Int(-1,-1), false, 0); 
+        }
     }
 
     public void UpdateTileView()
@@ -113,6 +168,7 @@ public class Tile// : MonoBehaviour
         string tilePath = null; 
         string coverPath = null;  
         string vegetationPath = null;  
+        string vegetationFrontPath = "Invisible";
         float transparencyCover = 1f;
 
         if (type == TileType.Water)
@@ -135,21 +191,43 @@ public class Tile// : MonoBehaviour
             }
             //Variation de la végétation
             int variation_vegetation = 1;
-            
+            variation_vegetation = (int)(variation/10);
+            /*
             if (variation > 11 && variation < 20 ) {variation_vegetation = 2;}
             else if (variation > 3 && variation <= 11) {variation_vegetation = 4;}
             else if (variation == 3) {variation_vegetation = 3;}
             else if (variation == 2) {variation_vegetation = 5;}
             else if (variation == 1) {variation_vegetation = 6;}
+            */
             //Valeur de la variation de végétation
             if (mulchType == 4){
                 vegetationPath = "Plants/Vegetation/Stone_"+(int)variation /3;}
-            else if (mulchLevel > 3){vegetationPath = "Plants/Vegetation/Mulch_"+mulchType+"_1";}
-            else if (mulchLevel > 0){vegetationPath = "Plants/Vegetation/Mulch_"+mulchType+"_0";}
-            else if (vegetationLevel > 0 && (vegetationLevel < 5 || variation_vegetation == 1 )){vegetationPath = "Plants/Vegetation/Grass"+vegetationLevel;}
+            else if (mulchLevel > 3){vegetationPath = "Plants/Vegetation/Mulch_"+mulchType+"_1_"+(int)variation /30;}
+            else if (mulchLevel > 0){vegetationPath = "Plants/Vegetation/Mulch_"+mulchType+"_0_"+(int)variation /30;}
+            /*else if (vegetationLevel > 0 && (vegetationLevel < 5 || variation_vegetation == 1 )){vegetationPath = "Plants/Vegetation/Grass"+vegetationLevel;}*/
             else {
-                if (variation_vegetation == 5 || variation_vegetation == 3 || (TurnContext.Instance.month > 2 && TurnContext.Instance.month < 10)) {vegetationPath = "Plants/Vegetation/Grass"+vegetationLevel+"_"+variation_vegetation;}
-                else {vegetationPath = "Plants/Vegetation/Grass"+vegetationLevel;}
+                vegetationPath = "Plants/Vegetation/Grass"+vegetationLevel+"_"+variation_vegetation;
+                if (vegetationLevel >= 5)
+                {
+                    vegetationFrontPath = "Plants/Vegetation/Grass"+vegetationLevel+"_"+variation_vegetation + "_front";
+                }
+                /*
+                if (vegetationLevel > 5)
+                {
+                    vegetationPath = "Plants/Vegetation/Grass4_"+variation_vegetation;
+                }
+                else if (vegetationLevel > 3)
+                {
+                    vegetationPath = "Plants/Vegetation/Grass3_"+variation_vegetation;
+                }
+                else 
+                {
+                    vegetationPath = "Plants/Vegetation/Grass2_"+variation_vegetation;
+                }*/
+                
+                /*
+                if (variation_vegetation == 5 || variation_vegetation == 3 || (TurnContext.Instance.month > 2 && TurnContext.Instance.month < 10)) {}
+                else {vegetationPath = "Plants/Vegetation/Grass"+vegetationLevel;}*/
             }
         }        
 
@@ -174,6 +252,7 @@ public class Tile// : MonoBehaviour
         
         //REFRESH TILE VEGETATION
         UpdateVegetationObject(vegetationPath);
+        UpdateFrontVegetationObject(vegetationFrontPath);
 
         //REFRESH TILE COVER
         TileGrid.Instance.covermap.SetTile(new Vector3Int(position.x, position.y, 0), null);
@@ -189,7 +268,7 @@ public class Tile// : MonoBehaviour
             }
         }
         // REFRESH TILE BASE
-        Debug.LogError("Position " +position.x + "/"+ position.y+ " Type" +type+ " Path "+tilePath);
+        //Debug.LogError("Position " +position.x + "/"+ position.y+ " Type" +type+ " Path "+tilePath);
         UnityEngine.Tilemaps.Tile tile = Resources.Load<UnityEngine.Tilemaps.TileBase>(tilePath) as UnityEngine.Tilemaps.Tile;
         tile.color = tileColor;
         if (tile != null) 
@@ -199,6 +278,90 @@ public class Tile// : MonoBehaviour
             tile.color = new Color(1, 1, 1, 1);
         }
         else {Debug.LogError("Tile non trouvé path : "+ tilePath);}
+    }
+
+    public Color PreviewColor()
+    {
+        Debug.LogError("Viewtilemode " +GameSettings.Instance.viewtileMode);
+        if (GameSettings.Instance.viewtileMode == 1) // Clay : Ocre
+        {
+            float level = (float)clayPercentage/100;
+            float hue = Mathf.Lerp(0.1f, 0.05f, level); // Teinte
+            float saturation = Mathf.Lerp(0.1f, 0.9f, level); // Saturation
+            float value = Mathf.Lerp(0.9f, 0.7f, level); // Luminosité
+            //if(type == TileType.Water)
+            //{   
+            //    value = Mathf.Lerp(0.8f, 0.6f, level); // Luminosité
+            //}
+            return Color.HSVToRGB(hue, saturation, value);
+        }      
+    
+ 
+        if (GameSettings.Instance.viewtileMode == 2) //Sable : jaune
+        {
+            float level = (float)sandPercentage/100;
+            float hue = Mathf.Lerp(0.00f, 0.15f, level); // Teinte (jaune)
+            float saturation = Mathf.Lerp(0.05f, 1f, level); // Saturation (augmentation progressive)
+            float value = 0.7f;
+            //if(type == TileType.Water)
+            //{   
+            //    value = 0.6f;
+            //}
+            return Color.HSVToRGB(hue, saturation, value);
+        }    
+        if (GameSettings.Instance.viewtileMode == 3) //Limon : marron
+        {
+            float level = (float)siltPercentage/100;
+            float gray = Mathf.Lerp(0.6f, 0.1f, level); // Composant de gris (diminution progressive)
+            float green = Mathf.Lerp(0.6f, 0.9f, level); // Composant vert (augmentation progressive)
+            if(type == TileType.Water)
+            {   
+                gray = Mathf.Lerp(0.5f, 0.0f, level); // Composant de gris (diminution progressive)
+                green = Mathf.Lerp(0.5f, 0.8f, level); // Composant vert (augmentation progressive)
+            }
+            return new Color(gray, green, gray); 
+        }  
+        else if (GameSettings.Instance.viewtileMode == 4) // Water : bleu
+        {
+            float level = (float)waterLevel/10;
+            float r, g, b;
+            
+            if (type == TileType.Water)
+            {    
+                r = Mathf.Lerp(127, 0, level); // Composant rouge
+                g = Mathf.Lerp(127, 119, level); // Composant vert
+                b = Mathf.Lerp(127, 146, level); // Composant bleu
+            }
+            else
+            {
+                if (level <= 0.4f)
+                {
+                    float t = level / 0.4f;
+                    r = Mathf.Lerp(150f, 127f, t);
+                    g = Mathf.Lerp(126f, 127f, t);
+                    b = Mathf.Lerp(0f, 127f, t);
+                }
+                else
+                {
+                    float t = (level - 0.4f) / 0.6f;
+                    r = Mathf.Lerp(127f, 34f, t);
+                    g = Mathf.Lerp(127f, 49f, t);
+                    b = Mathf.Lerp(127f, 189f, t);
+                }
+            }
+            return new Color(r / 255f, g / 255f, b / 255f);
+        }      
+        else if (GameSettings.Instance.viewtileMode == 5) //Water : bleu
+        {
+            float pHlevel = (float)(pH())/7;
+            float level = pHlevel - 0.5f;
+            float hue = Mathf.Lerp(0.0f, 0.83f, level); // Hue (teinte) de 0 (rouge) à 0.83 (violet)
+            float saturation = 0.5f; // Saturation maximale
+            float value = 0.5f; // Luminosité élevée
+            return Color.HSVToRGB(hue, saturation, value);  
+        }  
+         
+        else {return new Color(1f, 1f, 1f);}
     }
     /**************************************************/
     /********** FIN APPARENCE DE LA TILE **************/
@@ -315,7 +478,7 @@ public class Tile// : MonoBehaviour
     public void CutGrass()
     {
         //Inventory.Instance.ChangeItemStock("Déchet vert", vegetationLevel-1);
-        //Settlement.Instance.SendToComposter((int)vegetationLevel/2); //TO DO : Reactiver
+        Settlement.Instance.SendToComposter((int)vegetationLevel/2); //TO DO : Reactiver
         vegetationLevel = 1;
         UpdateTileView();
     }

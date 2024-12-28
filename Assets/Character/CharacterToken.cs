@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public class CharacterToken : MonoBehaviour
 {
     public Character character;
     public UnityEngine.Transform tokenTransform;
-    public Vector3 targetPosition;
+    public Vector2Int targetPosition;
     public float speed = 5f;
     public Image characterImage;
     private List<Vector2Int> path;
@@ -18,6 +19,7 @@ public class CharacterToken : MonoBehaviour
     private float changeInterval = 0.10f;
     private bool pending; //true = en train de faire quelque chose, false = fini
     public List<Action> actionsExecution = new List<Action>(); //Cas humain
+    public bool leave = false; //cas animaux qui s'échapent
 
     /*****************************************/
     /********** CREATION DU TOKEN ************/
@@ -30,15 +32,12 @@ public class CharacterToken : MonoBehaviour
         canvas = gameObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.sortingOrder = 10002;
-        /*if (character is Chicken)
-        {
-            canvas.sortingOrder = 601;
-        }*/
         characterImage = new GameObject("CharacterImage_" + idImage).AddComponent<Image>();
         characterImage.transform.SetParent(canvas.transform, false);
         path = null;
         transform.position = new Vector3(1,1,1);
         LoadCharacterImage(type, idImage);
+        leave = false;
     }
     /*********************************************/
     /********** FIN CREATION DU TOKEN ************/
@@ -50,10 +49,11 @@ public class CharacterToken : MonoBehaviour
     private void Update()
     {
         Vector3 worldTargetPosition = IsometricToUnityCoordinates(targetPosition);
-        worldTargetPosition.y = worldTargetPosition.y; //+ 0.2f; 
+        worldTargetPosition.y = worldTargetPosition.y + 0.3f; 
+        /*TO DO / Mettre à jour le Ratiospeed que si on change de tile ? */
         if (TurnContext.Instance.speed == 1) {transform.position = Vector3.MoveTowards(transform.position, worldTargetPosition, speed * RatioSpeed(transform.position) * Time.deltaTime);}
         else if (TurnContext.Instance.speed == 2) {transform.position = Vector3.MoveTowards(transform.position, worldTargetPosition, speed * 4 * RatioSpeed(transform.position) * Time.deltaTime);}
-        canvas.sortingOrder = 10002 - 10*(int)((transform.position.y-0.2f)/0.3f); 
+        canvas.sortingOrder = 10012 - (int)(12*((transform.position.y-0.4f)/0.3f));
         if (character is Human && actionsExecution.Count != 0)
         {
             ExecuteHumanActions();
@@ -63,17 +63,35 @@ public class CharacterToken : MonoBehaviour
         {
             UpdateSwarmBees();
         }
-        if (character is Chicken) // Idem pour Canard et Mouton. Lapin a part car dans cage
+        if (character is Chicken || character is Duck) // Idem pour Canard et Mouton. Lapin a part car dans cage
         {
             UpdateAnimal();
         }
     }
 
+
+    private void GoHome()
+    {
+        if (character is Human human)
+        {
+            targetPosition = human.house.position;
+        }
+        if (character is SwarmBees bees)
+        {
+            
+        }
+        if (character is Chicken chicken) 
+        {
+            targetPosition = chicken.chickenCoop.position;
+            chicken.Lay();
+        }
+    }
+    
     private void ExecuteHumanActions()
     {
         Action actionExecution = actionsExecution[0];
-        Vector3Int currentCell = TileGrid.Instance.tilemap.WorldToCell(transform.position);
-        if (actionExecution.actionPosition == currentCell)
+        Vector3Int currentCell = TileGrid.Instance.tilemap.WorldToCell(new Vector3(transform.position.x, transform.position.y -0.3f, transform.position.z));  
+        if (actionExecution.actionPosition.x == currentCell.x && actionExecution.actionPosition.y == currentCell.y)
         {
             if (actionExecution.timer <= 0f)
             {
@@ -81,7 +99,7 @@ public class CharacterToken : MonoBehaviour
                 actionsExecution.RemoveAt(0);
                 UpdateStatus("Sleep");
                 //if (Tribe.activeMember == character){} //Refresh uniquement s'il s'agit de l'humain selectionné
-                /* ActionPile.Instance.Refresh(); */ // TO DO : REMETTRE
+                 ActionPile.Instance.Refresh(); // TO DO : REMETTRE
             }
             else
             {
@@ -133,10 +151,28 @@ public class CharacterToken : MonoBehaviour
         if (timer >= changeInterval)
         {
             timer = 0f;
-            Vector3Int currentCell = TileGrid.Instance.tilemap.WorldToCell(transform.position);
-            if (targetPosition.x == currentCell.x && targetPosition.y == currentCell.y)
+            Vector3Int currentCell = TileGrid.Instance.tilemap.WorldToCell(new Vector3(transform.position.x, transform.position.y -0.3f, transform.position.z));  
+            if (targetPosition.x == currentCell.x && targetPosition.y == currentCell.y && !leave)
             {
-                int random = UnityEngine.Random.Range(1, 40);
+                int random = UnityEngine.Random.Range(1, 500);
+                if (random == 1 && !((currentCell.x == -3 || currentCell.x == -4 ) && (currentCell.y == 10 || currentCell.y == 9)))
+                {
+                    GoHome();
+                    float orientation = AngleInDegrees(new Vector2Int(currentCell.x, currentCell.y),targetPosition);
+                    if (orientation < 45f) {direction = 5;}
+                    else if (orientation < 90f) {direction = 4;}
+                    else if (orientation < 135f) {direction = 3;}
+                    else if (orientation < 180f) {direction = 2;}
+                    else if (orientation < 225f) {direction = 1;}
+                    else if (orientation < 270f) {direction = 8;}
+                    else if (orientation < 315f) {direction = 7;}
+                    else if (orientation < 360f) {direction = 6;}
+                    else {direction = 5;}
+                    counter = 0;
+                    string type = GetCharacterType(character);
+                    LoadCharacterImageDirection(type, idImage);
+                }
+                random = UnityEngine.Random.Range(1, 30);
                 if (random == 1)
                 {
                     if (counter > 0)
@@ -146,7 +182,7 @@ public class CharacterToken : MonoBehaviour
                     else
                     {
                         direction = UnityEngine.Random.Range(1, 9);
-                        Vector3 oldPosition = targetPosition;
+                        Vector2Int oldPosition = targetPosition;
                         if (direction == 1) {targetPosition.x = currentCell.x - 1;}
                         else if (direction == 2) {targetPosition.x = currentCell.x - 1; targetPosition.y = currentCell.y + 1;}
                         else if (direction == 3) {targetPosition.y = currentCell.y + 1;}
@@ -158,9 +194,24 @@ public class CharacterToken : MonoBehaviour
                         //test target
                         /*if (Settlement.Instance.OnTileClickBool(new Vector3Int((int)targetPosition.x, (int)targetPosition.y, 0)) || targetPosition.x < 0 || targetPosition.y < 0 || targetPosition.x >= GameSettings.Instance.gridSizeX || targetPosition.y >= GameSettings.Instance.gridSizeZ)
                         */
+                        if (BlockedByEnclosure())
+                        {
+                            targetPosition = oldPosition;
+                        }
+
                         if (targetPosition.x < 0 || targetPosition.y < 0 || targetPosition.x >= GameSettings.Instance.gridSize || targetPosition.y >= GameSettings.Instance.gridSize)
-                        
-                        {targetPosition = oldPosition;}
+                        {
+                            if (((currentCell.x == -3 || currentCell.x == -4 ) && (currentCell.y == 10 || currentCell.y == 9)) || GameSettings.Instance.DifficultyLevel == 0 || GameSettings.Instance.DifficultyLevel == 99)
+                            {
+                                targetPosition = oldPosition;
+                            }
+
+                            else
+                            {
+                                GoTargetPosition(targetPosition);
+                                leave = true;
+                            }
+                        }
 
                     }
 
@@ -176,6 +227,10 @@ public class CharacterToken : MonoBehaviour
                     }
                     else if (counter == 2)
                     {
+                        if (random <3)
+                        {
+
+                        }
                         counter = 1;
                     }
                     string type = GetCharacterType(character);
@@ -184,6 +239,35 @@ public class CharacterToken : MonoBehaviour
             }
         }
     }
+
+    public bool BlockedByEnclosure()
+    {
+        return false;
+    }
+    public float AngleInDegrees(Vector2 position1, Vector2 position2)
+    {
+        // Calcul de la différence entre les coordonnées des deux points
+        float deltaY = position2.y - position1.y;
+        float deltaX = position2.x - position1.x;
+
+        // Calcul de l'angle en radians, puis conversion en degrés
+        float angleRadians = Mathf.Atan2(deltaY, deltaX);
+        float angleDegrees = angleRadians * Mathf.Rad2Deg;
+        angleDegrees += 22.5f;
+        // Pour avoir un angle entre 0 et 360 degrés
+        if (angleDegrees < 0)
+        {
+            angleDegrees += 360;
+        }
+
+        return angleDegrees;
+    }
+
+    public void DestroyToken()
+    {
+        //Destroy(characterImage.transform.parent.gameObject);
+        Destroy(this.gameObject);
+    }
     /**********************************************/
     /********** FIN MOUVEMENT DU TOKEN ************/
     /**********************************************/
@@ -191,7 +275,7 @@ public class CharacterToken : MonoBehaviour
     /*******************************************************/
     /********** CHANGEMENT ET ATTRIBUT DU TOKEN ************/
     /*******************************************************/
-    public void GoTargetPosition(Vector3 target)
+    public void GoTargetPosition(Vector2Int target)
     {
         targetPosition = target;
         Vector3 worldTargetPosition = IsometricToUnityCoordinates(targetPosition);
@@ -201,11 +285,15 @@ public class CharacterToken : MonoBehaviour
     public float RatioSpeed(Vector3 position)
     {
         Vector3Int currentCell = TileGrid.Instance.tilemap.WorldToCell(transform.position);
-        Tile currentTile = TileGrid.Instance.tiles[currentCell.x, currentCell.y];
-        if (currentTile.GetTileType() == TileType.Water){return 0.3f;}
-        else if (currentTile.vegetationLevel >= 8){return 0.3f;}
-        else if (currentTile.vegetationLevel >= 6){return 0.5f;}
-        else if (currentTile.vegetationLevel >= 4){return 0.8f;}
+        if (currentCell.x >=0 && currentCell.y >=0)
+        {
+            Tile currentTile = TileGrid.Instance.tiles[currentCell.x, currentCell.y];
+            if (currentTile.GetTileType() == TileType.Water){return 0.3f;}
+            else if (currentTile.vegetationLevel >= 8){return 0.3f;}
+            else if (currentTile.vegetationLevel >= 6){return 0.5f;}
+            else if (currentTile.vegetationLevel >= 4){return 0.8f;}
+            else return 1f;
+        }
         else return 1f;
     }
 
@@ -217,6 +305,7 @@ public class CharacterToken : MonoBehaviour
         }
         else if (character is SwarmBees){ return "bees";}
         else if (character is Chicken){ return "chicken";}
+        else if (character is Duck){ return "duck";}
         else return "default";
     }
 
@@ -243,6 +332,14 @@ public class CharacterToken : MonoBehaviour
         {
             characterImage.sprite = Sprite.Create(randomCharacterTexture, new Rect(0, 0, randomCharacterTexture.width, randomCharacterTexture.height), Vector2.one * 0.5f);
             characterImage.rectTransform.sizeDelta = new Vector2(0.5f, 0.5f);
+        }
+        if (leave)
+        {
+            characterImage.color = new Color(1f,0.5f,0.5f,0.5f);
+        }
+        else
+        {
+            characterImage.color = new Color(1f,1f,1f,1f);
         }
     }
 
@@ -299,10 +396,22 @@ public class CharacterToken : MonoBehaviour
         return new Vector3(unityX, unityY, 0); // Retourner les coordonnées converties
     }
 
+    public Vector2Int GetIsometricPosition()
+    {
+        Vector3Int grid3Pos = TileGrid.Instance.tilemap.WorldToCell(new Vector3 (transform.position.x, transform.position.y-(float)0.3, 0));
+        return new Vector2Int ((int)Math.Round((float)grid3Pos.x), (int)Math.Round((float)grid3Pos.y));
+    }
+
     // Méthode pour définir la position cible
-    public void SetTargetPosition(Vector3 target)
+    public void SetTargetPosition(Vector2Int target)
     {
         targetPosition = target;
+    }
+    public void ToPosition(Vector2Int target)
+    {
+        targetPosition = target;
+        Vector3 worldTargetPosition = IsometricToUnityCoordinates(targetPosition);
+        transform.position = worldTargetPosition;
     }
     
     /***********************************************************/

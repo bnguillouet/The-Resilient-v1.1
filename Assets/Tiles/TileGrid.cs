@@ -34,9 +34,13 @@ public class TileGrid : MonoBehaviour
         tilemap.ClearAllTiles();
         covermap.ClearAllTiles();
         previewmap.ClearAllTiles();
-        /*Settlement.ReinitializeSettlement();
+        foreach (Tile tile in tiles)
+        {
+            tile.DestroyTile();
+        }
+        Settlement.ReinitializeSettlement();
         Tribe.Instance.ReinitializeTribe();
-        PlantManager.ReinitializePlantManager();*/ //TO DO REMETTRE
+        PlantManager.ReinitializePlantManager();
         Inventory.Instance.ReinitializeItems();
         TurnContext.Instance.NewGame();
         
@@ -55,6 +59,7 @@ public class TileGrid : MonoBehaviour
         if(hover){tiles[position.x, position.y].hoverVisual = true;}
         else {tiles[position.x, position.y].hoverVisual = false;}
         tiles[position.x, position.y].UpdateTileView();
+       /* Debug.LogError("passe par HoverTile");*/
     }
 
     public void ChangeTileType(Vector2Int position, TileType newType) // Fonction pour changer le type de tuile d'une case spécifique
@@ -64,6 +69,7 @@ public class TileGrid : MonoBehaviour
             if (newType == TileType.Water) {tiles[position.x, position.y].vegetationLevel = 0;}
             if (newType == TileType.Building) {tiles[position.x, position.y].vegetationLevel = 1;}
             tiles[position.x, position.y].SetTileType(newType);
+            if (newType == TileType.Building) {tiles[position.x, position.y].UpdateInsideObject();}
         }
     }
 
@@ -82,39 +88,40 @@ public class TileGrid : MonoBehaviour
     /********************************************************/
     public string CanBuildBuilding(Vector2Int position, int sizeInput, bool constaint) //constraint mean that should be in the ownedgrid
     {
-       /* 
-        int size = sizeInput; 
+       
+        Vector2Int size = new Vector2Int(sizeInput, sizeInput); 
         if (GameSettings.Instance.hoverMode == 2) {size = Settlement.selectedBlueprint.size;} //Debug.Log("En mode batiment");
         //else {}
-        if (position.x < 0 || position.y < 0 || constaint && (position.x + size > GameSettings.Instance.ownedgridSizeX || position.y + size > GameSettings.Instance.ownedgridSizeY) || !constaint && (Math.Max(x, y) + size > GameSettings.Instance.gridSize))
+        if (position.x < 0 || position.y < 0 || constaint && (position.x + size.x > GameSettings.Instance.ownedgridSizeX || position.y + size.y > GameSettings.Instance.ownedgridSizeY) || !constaint && (Math.Max(position.x + size.x, position.y + size.y) > GameSettings.Instance.gridSize))
         {
             return "Vous ne pouvez pas construire en dehors de votre terrain";
         }
-        //***********************************************************//*/
-        //** DEBUT TEST POUR LES RESERVE D'EAU A CÖTE D'UN BATIMENT *//*/
-        //***********************************************************//*/
+        //***********************************************************//
+        //** DEBUT TEST POUR LES RESERVE D'EAU A CÖTE D'UN BATIMENT *//
+        //***********************************************************//
         if (GameSettings.Instance.hoverMode == 2 && Settlement.selectedBlueprint is WaterStorageBlueprint)
         {
             bool testNearBuilding = Settlement.Instance.IsNearBuilding(position);
             if (!testNearBuilding){return "Un récupérateur d'eau doit être placé à côté d'un batiment.";}
-        
-        //***********************************************************//*/
-        //** FIN TEST POUR LES RESERVE D'EAU A CÖTE D'UN BATIMENT *//*/
-        //***********************************************************//*/
         }
+        //***********************************************************//
+        //** FIN TEST POUR LES RESERVE D'EAU A CÖTE D'UN BATIMENT   *//
+        //***********************************************************//
         bool wasInside = true;
         bool initiateInside = false;
-        for (int i = position.x; i < position.x + size; i++)
+        for (int i = position.x; i < position.x + size.x; i++)
         {
-            for (int j = position.y; j < position.y + size; j++)
+            for (int j = position.y; j < position.y + size.y; j++)
             {
                 if (tiles[i, j].GetTileType() == TileType.Water){return "Vous ne pouvez pas construire sur l'eau. Assechez le terrain pour Construire !";}
                 if (tiles[i, j].GetTileType() == TileType.Building)
                 {
-                    string buildingType = Settlement.Instance.OnTileClick(position).GetType().Name;
-                    if (((buildingType == "WoodenTub" || buildingType == "GreenHouse") /*&& GameSettings.Instance.hoverMode != 2*//*)  || buildingType == "Enclosure") //Ajouter structure plutôt que batiment en general
+                    //****** A REPRENDRE : CONFLIT BATIMENT DANS BATIMENT **********/
+                    /*Building buildingFind = Settlement.Instance.OnTileClick(position);
+                    string buildingType = buildingFind.GetType().Name;
+                    if (((buildingType == "WoodenTub" || buildingType == "GreenHouse") && GameSettings.Instance.hoverMode != 2)  || buildingType == "Enclosure") //Ajouter structure plutôt que batiment en general
                     {
-                        if (PlantManager.Instance.OnTileClick(position) != null){return "Vous ne pouvez pas construire sur des plantes. Arrachez-les avant.";}
+                        /*if (PlantManager.Instance.OnTileClick(position) != null){return "Vous ne pouvez pas construire sur des plantes. Arrachez-les avant.";}
                         else if (!wasInside && initiateInside) 
                         {
                             return "Vous ne pouvez pas construire à l'interieur et exterieur du batiment.";
@@ -123,67 +130,108 @@ public class TileGrid : MonoBehaviour
                     }
                     else
                     //if (GameSettings.Instance.hoverMode == 2 || !(Settlement.Instance.OnTileClick(new Vector3Int(i,j,0)).GetType().Name == "WoodenTub" || Settlement.Instance.OnTileClick(new Vector3Int(i,j,0)).GetType().Name != "Greenhouse")) // TO DO : Ajouter la condition pour les grosses plantes
-                    {
+                    {*/
                         return "Vous ne pouvez pas construire par-dessus un autre bâtiment. Détruisez-le avant.";
-                    }
+                    /*}*/
                 }
                 else 
                 {
                     if (wasInside && initiateInside) {return "Vous ne pouvez pas construire à l'interieur et exterieur du batiment.";}
                     wasInside = false;
                 }
-                if (PlantManager.Instance.OnTileClick(position) != null){return "Vous ne pouvez pas construire sur des plantes. Arrachez-les avant.";}
+                /*if (PlantManager.Instance.OnTileClick(position) != null){return "Vous ne pouvez pas construire sur des plantes. Arrachez-les avant.";}*/ //TO DO : REMETTRE QUAND PLANT MANAGER OK
                 initiateInside = true;
             }
-        }*/
+        }
         return "ok"; // Si toutes les vérifications passent, vous pouvez construire le bâtiment
     }
 
-    public void Build(Vector2Int position) 
+    public void Build(Vector2Int position, bool orientation = false) 
     {
         string buildResult = CanBuildBuilding(position, 1, false);
         if (buildResult == "ok")
         {
             if (GameSettings.Instance.hoverMode == 2)
             {
-                //Settlement.CreateBuilding(position); //TO DO : A REMETTRE APRES SETTLEMENT
-                for (int i = position.x; i < position.x + 1/*Settlement.selectedBlueprint.size*/; i++)
+                Settlement.CreateBuilding(position);
+                for (int i = position.x; i < Settlement.selectedBlueprint.size.x; i++)
                 {
-                    for (int j = position.y; j < position.y + 1/*Settlement.selectedBlueprint.size*/; j++)
+                    for (int j = position.y; j < Settlement.selectedBlueprint.size.y; j++)
                     {
                         ChangeTileType(new Vector2Int (i, j), TileType.Building);
+                        
                     }
                 }
-                Debug.LogError ("Plannification du Batiment");
             }
             else if (GameSettings.Instance.hoverMode == 3)
             {
-                //PlantManager.ToPlant (position, Tribe.activeMember); //TO DO : A REMETTRE APRES PLANT MANAGER
+                PlantManager.ToPlant (position, Tribe.activeMember);
                 tiles[position.x, position.y].vegetationLevel = 0;
-                Debug.LogError ("Plannification de la plante");
             }
             tiles[position.x, position.y].UpdateTileView();
+            /*else if (GameSettings.Instance.hoverMode == 9)
+            {
+                Settlement.CreateBuilding(position, orientation);
+            }*/
         }
         else
         {
             Debug.Log(buildResult);
         }
     }
+    /*
+    public void BuildLine(Vector2Int positionStart, Vector2Int positionEnd)
+    {
+        if (positionEnd.x == positionStart.x)
+        {
+            if (positionEnd.y < positionStart.y)
+            {
+                for (int i = positionEnd.y; i < positionStart.y; i++)
+                {
+                    Settlement.CreateBuilding(new Vector2Int (positionEnd.x,i), true);
+                }
+            }
+            else if (positionEnd.y > positionStart.y)
+            {
+                for (int i = positionStart.y; i < positionEnd.y; i++)
+                {
+                    Settlement.CreateBuilding(new Vector2Int (positionEnd.x,i), true);
+                }
+            }
+        }
+        else if (positionEnd.y == positionStart.y)
+        {
+            if (positionEnd.x < positionStart.x)
+            {
+                for (int i = positionEnd.x; i < positionStart.x; i++)
+                {
+                    Settlement.CreateBuilding(new Vector2Int (i,positionEnd.y), true);
+                }
+            }
+            else if (positionEnd.y > positionStart.y)
+            {
+                for (int i = positionStart.x; i < positionEnd.x; i++)
+                {
+                    Settlement.CreateBuilding(new Vector2Int (i,positionEnd.y), true);
+                }
+            }
+        }
+    }
+    */
+
     /****************************************************************/
     /********** FIN DES FONCTIONS DE TEST CONSTRUCTION **************/
     /****************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
+    public void NextMonth()
+    {
+        for (int x = 0; x < GameSettings.Instance.ownedgridSizeX; x++)
+        {
+            for (int y = 0; y < GameSettings.Instance.ownedgridSizeY; y++) 
+            {
+                tiles[x,y].NextMonth();
+            }
+        }
+    }
 
     public bool CheckNeighboringTiles(Vector2Int position, int distance, TileType typeToCheck, bool centerFree)
     {
